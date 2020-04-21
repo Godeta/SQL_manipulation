@@ -19,19 +19,23 @@ def datagenerate(records, headers):
 
             # tous les autres se suivent depuis le premier identifiant aléatoire, ainsi ils sont tous uniques
             userId = FirstId + i
+            full_name = fake.name()  # nom complet
+            FLname = full_name.split(" ")  # on le sépare en deux
+            Fname = FLname[0]  # first name et en dessous last name
+            Lname = FLname[1]
 
             writer.writerow({  # écriture des lignes, précision pour chaque colonne
                 "person_id": userId,  # id
                 "Prefix": fake.prefix(),  # préfixe
-                "first_name": fake.name(),  # nom
-                "last_name": fake.name(),  # nom2
+                "first_name": Fname,  # prénom
+                "last_name": Lname,  # nom
                 "Birth Date": fake.date(pattern="%d-%m-%Y", end_datetime=datetime.date(2010, 1, 1)),
                 "Phone Number": fake1.phone_number()  # numéro de tel
             })
 
 
 if __name__ == '__main__':
-    records = 10000  # nombre de lignes à génerer
+    records = 1000000  # nombre de lignes à génerer
     headers = ["person_id", "Prefix", "first_name",
                "last_name", "Birth Date", "Phone Number"]
     print("Veuillez patienter...")
