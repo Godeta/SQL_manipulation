@@ -3,7 +3,7 @@ from faker import Faker
 import datetime
 import random  # uniquement pour l'identifiant
 
-FirstId = random.getrandbits(32)  # on défini un premier identifiant aléatoire
+FirstId = random.getrandbits(16)  # on défini un premier identifiant aléatoire
 
 
 def datagenerate(records, headers):
@@ -25,9 +25,8 @@ def datagenerate(records, headers):
                 "Prefix": fake.prefix(),  # préfixe
                 "first_name": fake.name(),  # nom
                 "last_name": fake.name(),  # nom2
-                # date
                 "Birth Date": fake.date(pattern="%d-%m-%Y", end_datetime=datetime.date(2010, 1, 1)),
-                "Phone Number": fake1.phone_number(),  # numéro de tel
+                "Phone Number": fake1.phone_number()  # numéro de tel
             })
 
 
