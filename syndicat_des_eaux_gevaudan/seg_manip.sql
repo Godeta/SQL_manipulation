@@ -5,8 +5,37 @@ res_code varchar(5) not null,
 cap_code varchar(5) not null,
 tec_matricule varchar(5) not null,
 als_remarque varchar(70),
-constraint pk_res_cap_code primary key (res_code,cap_code)
+constraint pk_alimenter_res_cap_code primary key (res_code,cap_code)
 );
+
+--clés étrangères 
+alter table seg_alimenter_secours add (
+constraint fk_alimenter_matricule
+foreign key(tec_matricule)
+references seg_technicien(tec_matricule)
+);
+
+alter table seg_alimenter_secours add (
+constraint fk_alimenter_cap_code
+foreign key(cap_code)
+references seg_captage(cap_code)
+);
+
+alter table seg_alimenter_secours add (
+constraint fk_alimenter_res_code
+foreign key(res_code)
+references seg_reservoir(res_code)
+);
+
+--Index
+create index i_fk_alimenter_matricule
+     on seg_alimenter_secours (tec_matricule);
+
+create index i_fk_alimenter_cap_code
+     ON seg_alimenter_secours (cap_code);
+
+create index i_fk_alimenter_res_code
+     on seg_alimenter_secours (res_code);
 
 -- mise à jour de données
 --insérer valeur, insérer un technicien T11 (ne rien insérer dans TEC_TELEPHONE)
@@ -86,9 +115,10 @@ group by (moi_numero)
 --requête 6
 select moi_libelle, sum(pos_debit_moyen) as quantite from seg_possede
 join seg_mois using (moi_numero)
-having sum(pos_debit_moyen) > (select avg(somme_par_mois) from ( select sum(pos_debit_moyen) as somme_par_mois
-from seg_possede
+having sum(pos_debit_moyen) > (select avg(somme_par_mois) from ( 
+select sum(pos_debit_moyen) as somme_par_mois from seg_possede
 group by (moi_numero)
-) somme_par_mois )
+) )
 group by (moi_libelle,moi_numero);
 
+--PL/SQL
