@@ -35,4 +35,60 @@ select tec_matricule,tec_prenom,concat(substr(tec_nom,1,1),'***')
 from seg_technicien;
 
 --2. Afficher toutes les informations des techniciens et le nom des captages de secours dont ils ont la charge
+select tec_matricule,tec_nom,tec_prenom,tec_telephone,cap_nom from seg_technicien 
+join seg_alimenter_secours using(tec_matricule)
+join seg_captage using (cap_code);
+
+--3. Même question que précédemment sauf que cette fois si, il faut afficher le nom de tous les techniciens, même ceux qui ne
+--sont affectés à aucun captage de secours. Pour ces derniers, on écrira " AUCUN " dans cap_nom.
+select tec_matricule,tec_nom,tec_prenom,tec_telephone,nvl(cap_nom,'AUCUN') from seg_technicien 
+left join seg_alimenter_secours using(tec_matricule)
+left join seg_captage using (cap_code)
+order by tec_matricule;
+
+--4. Pour chaque substance mesurée (dans seg_contenir), afficher le nom, sub_val_max et la valeur moyenne des quantités
+--analysées. La projection devra avoir cette forme (ne pas oublier d'arrondir à deux chiffres après la virgule) :
+select sub_nom, round(avg(con_quantite),2) as QuantiteMoyenne, sub_valmax 
+from seg_contenir
+join seg_substance using (sub_code)
+group by (sub_nom,sub_valmax);
+
+--5. Pour chaque substance mesurée (dans seg_contenir), afficher le nom, le nombre de mesures. Sur chaque ligne, afficher en
+--outre le nombre total de mesures. 2 solutions sont demandées (voir capture)
+--Ne pas oublier d'arrondir à deux chiffres après la virgule.
+
+--solution 1 :
+select sub_nom, count(sub_code) as nombre_analyse, sum(count(sub_code)) OVER() as total
+from seg_contenir
+join seg_substance using (sub_code)
+group by (sub_nom,sub_code);
+
+--solution 2 :
+select sub_nom, count(sub_code) as nombre_analyse
+from seg_contenir
+join seg_substance using (sub_code)
+group by (sub_nom,sub_code)
+
+union all
+select 'total', sum(count(sub_code)) OVER()
+from seg_contenir;
+
+--6 On cherche à connaître les mois où le débit moyen est le plus élevé. Afficher le mois et la quantité totale des débits moyens
+--par mois pour ceux dont la quantité totale dépasse la moyenne des quantités totales par mois.
+
+--moyenne des sommes par mois
+select avg(somme_par_mois) from (
+select sum(pos_debit_moyen) as somme_par_mois
+from seg_possede
+group by (moi_numero)
+) somme_par_mois ;
+
+--requête 6
+select moi_libelle, sum(pos_debit_moyen) as quantite from seg_possede
+join seg_mois using (moi_numero)
+having sum(pos_debit_moyen) > (select avg(somme_par_mois) from ( select sum(pos_debit_moyen) as somme_par_mois
+from seg_possede
+group by (moi_numero)
+) somme_par_mois )
+group by (moi_libelle,moi_numero);
 
