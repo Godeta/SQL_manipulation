@@ -52,8 +52,10 @@ where tec_matricule = (select tec_matricule from seg_technicien where tec_nom='T
 
 --suppression
 --Supprimer les analyses qui contiennent plus de 17mg de plomb.
-delete from seg_contenir
-where con_quantite>17;
+delete from seg_contenir 
+where ana_id in (select ana_id from seg_contenir where con_quantite >17) and 
+sub_code = (select sub_code from seg_substance where sub_nom = 'plomb') and
+res_code in (select res_code from seg_contenir where con_quantite >17) ;
 --verif 
 select * from seg_analyse join seg_contenir using (ana_id);
 
