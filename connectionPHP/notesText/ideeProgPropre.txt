@@ -1,0 +1,8 @@
+Faire des classes en fonction des appels de table  :
+une classe coureur
+une classe equipe
+et l'autre classe
+
+Ne faire q'un formulaire qui appel la bonne classe en fonction de ce qu'à select l'utilisateur
+
+un formulaire select, insert, update, delete

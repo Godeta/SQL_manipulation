@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+	<meta charset="utf-8">
+	<title>Mise en ligne de BDD</title>
+	<center>
+		<h3> Bienvenue sur le site de mise à jour de base de donnée</h3>
+	</center>
+</head>
+
+<body>
+	<pre>
+    <form id="Formulaire_connexion" name="Formulaire_connexion" action = "../sessionIni.php" method="post" enctype="application/x-www-form-urlencoded">
+	<fieldset>
+	
+  	    <legend>Connectez vous</legend>
+		<label for="identifiant">Identifiant : </label><input type="text" id="ident" name="ident" size="20" maxlength="60" placeholder="" ><br />
+		<label for="mdp">Mot de passe : </label><input type="password" id="mdp" name="mdp" size="20"  AUTOCOMPLETE=OFF><br />   
+	</fieldset>
+	</pre>
+	<br />
+	<input type="reset" name="BtRst" value="Effacer"> &nbsp;&nbsp;&nbsp;
+	<input type="submit" name="BtSub" value="Envoyer">
+	<br />
+	<br />
+	</form>
+
+</body>
+
+</html>

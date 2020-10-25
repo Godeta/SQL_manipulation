@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+	<meta charset="utf-8">
+	<title>Formulaire de mise à jour de base de données</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+	<script	 src="../Affichage/formulaire_coureur.js"></script>	
+</head>
+
+<body>	
+		<center><h3> Formulaire de mise à jour de base de donées pour la table coureur</h3></center>
+		
+			
+			<fieldset>
+			<h4>Quelle action voulez-vous faire ?</h4>
+			
+			</fieldset>
+			<nav class="navbar navbar-expand-lg navbar-light bg-dark">
+				<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+				<div class="navbar_nav">
+					<a class="btn btn-outline-success" href="../AffichagePHP/inserer_tdf_coureur.php" role="button">Insérer un nouveau coureur</a>
+					<a class="btn btn-outline-success" href="../AffichagePHP/modifier_tdf_coureur.php" role="button">Modifier un coureur</a>
+					<a class="btn btn-outline-success" href="../AffichagePHP/supprimer_tdf_coureur.php" role="button">Supprimer coureur</a>
+				</div>
+			</div>
+		</nav>	
+		
+		<form id="Formulaire_coureur" name="Formulaire_coureur" action="../AffichagePHP/choix_action_tdf_coureur.php" method="post" enctype="application/x-www-form-urlencoded">
+			<br/>
+			<h4>Recherchez un coureur : </h4> <br />
+			<p>
+				<label> valeur : </label><input type="text" id="nom" name="nom" value=""><br />
+				<b>Critère de recherche : </b> 
+					<select name="colonne" id="colonne" size="1">
+						<option value="NOM"> Nom</option>
+						<option value="PRENOM"> Prenom</option>
+						<option value="ANNEE_PREM"> Annee de première participation</option>
+						<option value="ANNEE_NAISSANCE"> Année de naissance</option>
+					</select>
+			</p>
+			<p id="resultat">
+				<span id="r2">en attente de données</span>
+			</p>
+				
+			</form>
+			
+			<fieldset>
+
+			<script>
+			function chargerDonnee(nom,colonne) {
+			var xhr = new XMLHttpRequest();
+			xhr.open('GET', '../AffichagePHP/affichageCoureurs.php/?nom=' +
+				nom+'&column='+colonne);
+
+			var Lire = function () {
+				if (xhr.readyState === 4 && xhr.status === 200) {
+					document.getElementById('resultat').innerHTML = '<span>' + xhr.responseText + '</span>';
+				}
+			}
+			xhr.addEventListener("readystatechange", Lire, false);
+			xhr.send(null);
+		}
+		
+		var nomCoureur;
+		//défini dans afficherCoureur
+		var infosCoureur = function (id) {
+			nomCoureur = id.innerHTML;
+			localStorage["nomC"] = nomCoureur;
+			// alert("Tu as cliqué sur le coureur : " + nomCoureur);
+		};
+		var elt1 = document.getElementById('nom');
+		var colonne = document.getElementById('colonne');
+
+
+		var maFonction1 = function () {
+			chargerDonnee(elt1.value,colonne.value);
+
+
+			// //bouton défini dans afficherCoureur
+			// var coureurVal = document.getElementsByName('coureurData');
+
+			// coureurVal.addEventListener("click", infosCoureur);
+		};
+
+
+
+		elt1.addEventListener("keyup", maFonction1, false);
+			</script>
+</body>
+
+</html>
