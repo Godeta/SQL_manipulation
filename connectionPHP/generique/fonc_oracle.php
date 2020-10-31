@@ -115,9 +115,4 @@ function LireDonneesOCI3($cur,&$tab)
   }
   return $nbLignes;
 }
-
 ?>
-
-
-
-

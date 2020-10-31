@@ -25,7 +25,18 @@ function verif_annee_nai($an) //php
     return (preg_match('/^[0-9]{4}$/',$an));
 }
 // regex pour une année au format DD/MM/YYYY : #^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$#
-
+function verif_date_DDMMYY($an) //php
+{
+    return (preg_match('#^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{2}$#',$an));
+}
+function verif_compte($an) //php
+{
+    return (preg_match('/^[A-z]{3,}[0-9]*_?[0-9]*$/',$an));
+}
+function verif_num($an) //php
+{
+    return (preg_match('/^\d*$/',$an));
+}
 function verif_annee_prem($an) //php
 {
     return (preg_match('/^[0-9]{4}$/',$an));

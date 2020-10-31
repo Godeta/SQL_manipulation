@@ -1,6 +1,5 @@
 ﻿<?php
 
-
 function formatPrenom($prenom) //IMPORTANT PRECISER mb_internal_encoding("UTF-8") absolument
 {
     if (is_string($prenom)) {
@@ -62,12 +61,30 @@ function formatNom($nom)
 
 function calculNumCoureur($conn)
 {
-    $req = 'SELECT max(n_coureur)as maxi from tdf_coureur';
+    $req = 'SELECT max(n_coureur)as num from tdf_coureur';
     $cur = PreparerRequeteOCI($conn, $req);
     $res = ExecuterRequeteOCI($cur);
     $nb = LireDonneesOCI1($cur, $donnees);
-    //AfficherDonnee2($donnees,$nb);
-    return (intval($donnees[0]['MAXI']) + 1);
+    return (intval($donnees[0]['NUM']) + 1);
+}
+
+function calculAnneeMax($conn)
+{
+    $req = 'SELECT annee from tdf_annee where annee >=all ( select annee from tdf_annee )';
+    $cur = PreparerRequeteOCI($conn, $req);
+    $res = ExecuterRequeteOCI($cur);
+    $nb = LireDonneesOCI1($cur, $donnees);
+    return (intval($donnees[0]['ANNEE']));
+}
+
+function calculAnneeMin($conn)
+{
+    // $req = 'SELECT annee from tdf_annee where annee <=all ( select annee from tdf_annee )';
+    // $cur = PreparerRequeteOCI($conn, $req);
+    // $res = ExecuterRequeteOCI($cur);
+    // $nb = LireDonneesOCI1($cur, $donnees);
+    // return (intval($donnees[0]['ANNEE']));
+    return 1989; //on bidouille comme ça car la table tdf_classements_generaux n'est pas à jour avant 1989.
 }
 
 function skip_accents($str, $charset = 'utf-8')
@@ -82,3 +99,28 @@ function skip_accents($str, $charset = 'utf-8')
     return $str;
 }
 
+function remplirAnnee($nbLignes, $min)
+    {
+        for ($i = 0; $i < $nbLignes; $i++) {
+            $temp = $min + $i;
+            echo '<option value="' . $temp . '">';
+            echo $temp;
+            echo '</option>';
+        }
+    }
+
+function classementGeneral($annee,$conn){
+$req="select * from tdf_classements_generaux where annee=".$annee." order by rang_arrivee";
+$cur = PreparerRequeteOCI($conn,$req);
+$res = ExecuterRequeteOCI($cur);
+$nb = LireDonneesOCI1($cur,$donnees);
+AfficherRequete($donnees,false);
+}
+
+function gagnantEtapes($annee,$conn){
+    $req="select n_etape,n_coureur,nom,prenom,ville_d as Départ,ville_a as Arrivée,datetape as jour from tdf_coureur join tdf_temps using (n_coureur) join tdf_etape using (annee,n_etape) where annee=".$annee." and rang_arrivee=1 order by to_number(n_etape)";
+    $cur = PreparerRequeteOCI($conn,$req);
+    $res = ExecuterRequeteOCI($cur);
+    $nb = LireDonneesOCI1($cur,$donnees);
+    AfficherRequete($donnees,false);
+}

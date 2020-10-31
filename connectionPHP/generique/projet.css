@@ -1,0 +1,23 @@
+.table-wrapper {
+    position:relative;
+    top:-40px;
+    max-width: 70%;
+  }
+  .table-scroll {
+    height:400px;
+    overflow:auto;  
+    margin-top:20px;
+  }
+  .table-wrapper table {
+    width:100%;
+      
+  }
+
+  td{
+    text-align: center;
+  }
+
+  table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+  }

@@ -101,6 +101,11 @@ class Coureur
     // Renvoie la valeur reformatée ou -1 en cas d'erreur
 function changeValSelonType($typeVal,$valN) {
     switch ($typeVal) {
+        case 'N_COUREUR':
+            if(verif_num($valN)) 
+            return $valN;
+            else {echo "Nouvelle valeur de type numéro de coureur, invalide ! (admet uniquement des nombres)"; return -1;}
+            break;
         case 'NOM':
             if(verif_taille($valN) && verif_mon_nom($valN)) {//Vérifie si le prénom dépasse la taille réglementaire et passe la regex. 
             $valN = formatNom($valN);
@@ -124,6 +129,16 @@ function changeValSelonType($typeVal,$valN) {
             if(verif_annee_prem($valN)) 
             return $valN;
             else {echo "Nouvelle valeur de type année de première participation, invalide !"; return -1;}
+            break;
+        case 'COMPTE_ORACLE':
+            if(verif_compte($valN)) 
+            return $valN;
+            else {echo "Nouvelle valeur de type compte Oracle, invalide !"; return -1;}
+            break;
+        case 'DATE_INSERT':
+            if(verif_date_DDMMYY($valN)) 
+            return $valN;
+            else {echo "Nouvelle valeur de type date d'insertion, invalide !"; return -1;}
             break;
         default:
             echo "<br/>Le type de la valeur est inconnu !";

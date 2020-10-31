@@ -10,6 +10,9 @@
 <body>	
 	<ul>
 		<li>
+			<a href="../AffichagePHP/annee.php">Annee</a>
+		</li>
+		<li>
 			<a href="../AffichagePHP/supprimer_tdf_coureur.php">Suppression</a>
 		</li>
 		<li>
@@ -31,6 +34,15 @@
 					<label for="annee_naissance">Année de naissance : </label><input type="text" value="" id="annee_naissance" name="annee_naissance" size="20" maxlength="60" placeholder="YYYY" pattern="^[0-9]{4}$" ><br />
 					<!--pattern pour une date : DD/MM/YYYY ^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$ -->
 					<label for="annee_prem">Année de première participation : </label><input value="" type="text" id="annee_prem" name="annee_prem" size="20" placeholder="YYYY" pattern="^[0-9]{4}$" > <br />
+					<legend>Nationnalité</legend>
+					<select name="pays" size="1"> 
+						<option name="france"> France </option>
+						<option name="belgique"> Belgique </option>
+						<option name="suisse"> Suisse </option>
+						<option name="japon"> Japon </option>
+						<option name="australie"> Australie </option>
+						<option name="italie"> Italie </option>
+					</select>	
 					</fieldset>
 				</pre>	
 					<input type="reset" name="BtRst" value="Effacer">        &nbsp;&nbsp;&nbsp;

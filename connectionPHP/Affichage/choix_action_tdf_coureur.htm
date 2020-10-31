@@ -31,13 +31,16 @@
 			<br/>
 			<h4>Recherchez un coureur : </h4> <br />
 			<p>
-				<label> valeur : </label><input type="text" id="nom" name="nom" value=""><br />
+				<label> valeur : </label><input type="text" id="nom" name="nom" value="" placeholder=""><br />
 				<b>Critère de recherche : </b> 
-					<select name="colonne" id="colonne" size="1">
+					<select name="colonne" id="colonne" onchange="changePlaceHolder()" size="1">
 						<option value="NOM"> Nom</option>
 						<option value="PRENOM"> Prenom</option>
+						<option value="N_COUREUR"> Numéro de coureur</option>
 						<option value="ANNEE_PREM"> Annee de première participation</option>
 						<option value="ANNEE_NAISSANCE"> Année de naissance</option>
+						<option value="COMPTE_ORACLE"> Compte Oracle</option>
+						<option value="DATE_INSERT"> Date d'insertion dans la base</option>
 					</select>
 			</p>
 			<p id="resultat">
@@ -72,8 +75,38 @@
 		};
 		var elt1 = document.getElementById('nom');
 		var colonne = document.getElementById('colonne');
+		var place = "";
 
-
+		var changePlaceHolder = function() {
+		switch (colonne.value) {
+		case 'N_COUREUR':
+            place="440"
+            break;
+        case 'NOM':
+            place="PAUL"
+            break;
+        case 'PRENOM':
+            place="Titouan"
+            break;
+        case 'ANNEE_NAISSANCE':
+            place="1968"
+            break;
+        case 'ANNEE_PREM':
+            place="1992"
+            break;
+        case 'COMPTE_ORACLE':
+            place="IUT218"
+            break;
+        case 'DATE_INSERT':
+            place ="17/07/16"
+            break;
+        default:
+            place="WTF";
+            break;
+		}
+		document.getElementsByName('nom')[0].placeholder=place;
+		}
+		changePlaceHolder();
 		var maFonction1 = function () {
 			chargerDonnee(elt1.value,colonne.value);
 
