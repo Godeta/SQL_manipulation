@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <title>Informations coureur</title>
+    <script src="./coureurSelect.js"> </script>
+    <center>
+        <h3> Informations ou modifications du coureur : <?php echo ($numC);?></h3>
+    </center>
+</head>
+
+<body>
+    <pre>
+    <form id="Formulaire_coureur" name="Formulaire_coureur" action = "" method="post" enctype="multipart/form-data">
+	<fieldset>
+          Numéro : <?php echo ($numC);?>
+           <!-- <?php echo "test"; ?> -->
+          Nom : <?php echo ($nomC); ?>
+          Prenom : <?php echo ($prenomC); ?>
+          Année de naissance : <?php echo ($annee_nai); ?>
+	</fieldset>
+	</pre>
+    <br />
+    <pre>
+	<form id="Formulaire_coureur" name="Formulaire_coureur" action="modifier_tdf_coureur.php" method="post" enctype="application/x-www-form-urlencoded">
+        <pre>
+        <fieldset>
+            <fieldset>					
+                <legend>Modifier le coureur :</legend>
+            <label for="changValN"> Nouvelle valeur : </label><input value="<?php verifierText("changValN"); ?>" type="text" id="changValN" name="changValN" placeholder="Titouan"><br />
+            <b>Champ à modifier : </b> 
+            <select name="valType" size="1">
+                <option value="NOM"> Nom</option>
+                <option value="PRENOM"> Prenom</option>
+                <option value="ANNEE_PREM"> Annee de première participation</option>
+                <option value="ANNEE_NAISSANCE"> Année de naissance</option>
+            </select>
+            </fieldset>
+        </fieldset>	
+        </pre>
+        <input type="reset" name="BtRst" value="Effacer">        &nbsp;&nbsp;&nbsp;
+        <input type="submit" name="BtSubModif" value="Effectuer la modification" onclick="return testerValidModif()">
+        <br />				
+        
+    </form>
+
+</body>
+
+</html>

@@ -1,32 +1,24 @@
 <?php
 session_start();
 ?>
-
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="../generique/projet.css" media="all" />
-    <title>Classement général</title>
-</head>
-<body>
-    <?php
-    include '../generique/chaine.php';
-    include '../generique/fonc_oracle.php';
-    include '../generique/util_chap11.php';
-    $conn = OuvrirConnexionOCI($_SESSION['ident'],$_SESSION['mdp'], $_SESSION['site']);
-    $min = calculAnneeMin($conn);
-    $max = calculAnneeMax($conn);
-    $nbLignes = ($max - $min) + 1;
+<?php
+    include_once '../classesPHP/classe_annee.php';
+    include_once '../generique/chaine.php';
+    include_once '../generique/fonc_oracle.php';
+    include_once '../generique/util_chap11.php';    
+    $annee = new Annee();
 
     if (!empty($_POST)) {
+        include_once '../Affichage/annee.htm';
         if (isset($_POST['annee'])) {
-            $annee = $_POST['annee'];
-            classementGeneral($annee,$conn);
-            gagnantEtapes($annee,$conn);
+            $anneeChoisie = $_POST['annee'];
+            $annee->classementGeneral($anneeChoisie);
+            $annee->participants($anneeChoisie);
+            $annee->gagnantEtapes($anneeChoisie);
+            $annee->abandons($anneeChoisie);
         }
     } else
-        include '../Affichage/annee.htm';
+        include_once '../Affichage/annee.htm';
     ?>
-</body>
+
 </html>

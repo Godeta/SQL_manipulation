@@ -68,24 +68,11 @@ function calculNumCoureur($conn)
     return (intval($donnees[0]['NUM']) + 1);
 }
 
-function calculAnneeMax($conn)
+function dernierNumCoureur($conn)
 {
-    $req = 'SELECT annee from tdf_annee where annee >=all ( select annee from tdf_annee )';
-    $cur = PreparerRequeteOCI($conn, $req);
-    $res = ExecuterRequeteOCI($cur);
-    $nb = LireDonneesOCI1($cur, $donnees);
-    return (intval($donnees[0]['ANNEE']));
+    return (calculNumCoureur($conn)-1);
 }
 
-function calculAnneeMin($conn)
-{
-    // $req = 'SELECT annee from tdf_annee where annee <=all ( select annee from tdf_annee )';
-    // $cur = PreparerRequeteOCI($conn, $req);
-    // $res = ExecuterRequeteOCI($cur);
-    // $nb = LireDonneesOCI1($cur, $donnees);
-    // return (intval($donnees[0]['ANNEE']));
-    return 1989; //on bidouille comme ça car la table tdf_classements_generaux n'est pas à jour avant 1989.
-}
 
 function skip_accents($str, $charset = 'utf-8')
 {
@@ -110,6 +97,8 @@ function remplirAnnee($nbLignes, $min)
     }
 
 function classementGeneral($annee,$conn){
+echo "<h1>Classement général</h1>";
+echo"</br>";
 $req="select * from tdf_classements_generaux where annee=".$annee." order by rang_arrivee";
 $cur = PreparerRequeteOCI($conn,$req);
 $res = ExecuterRequeteOCI($cur);
@@ -118,7 +107,29 @@ AfficherRequete($donnees,false);
 }
 
 function gagnantEtapes($annee,$conn){
+    echo "<h1>Gagnant par étape</h1>";
+    echo"</br>";
     $req="select n_etape,n_coureur,nom,prenom,ville_d as Départ,ville_a as Arrivée,datetape as jour from tdf_coureur join tdf_temps using (n_coureur) join tdf_etape using (annee,n_etape) where annee=".$annee." and rang_arrivee=1 order by to_number(n_etape)";
+    $cur = PreparerRequeteOCI($conn,$req);
+    $res = ExecuterRequeteOCI($cur);
+    $nb = LireDonneesOCI1($cur,$donnees);
+    AfficherRequete($donnees,false);
+}
+
+function participants($annee,$conn){
+    echo "<h1>Participants</h1>";
+    echo"</br>";
+    $req="select n_coureur,n_dossard,tdf_coureur.nom as nom,prenom,code_cio,tdf_sponsor.nom as nom_equipe from tdf_parti_coureur join tdf_sponsor using (n_equipe,n_sponsor) join tdf_coureur using (n_coureur) where annee=".$annee." order by n_equipe";
+    $cur = PreparerRequeteOCI($conn,$req);
+    $res = ExecuterRequeteOCI($cur);
+    $nb = LireDonneesOCI1($cur,$donnees);
+    AfficherRequete($donnees,false);
+}
+
+function abandons($annee,$conn){
+    echo "<h1>Abandons</h1>";
+    echo"</br>";
+    $req="select n_coureur,n_dossard,tdf_coureur.nom as nom,prenom,code_cio,tdf_sponsor.nom as nom_equipe,n_etape,libelle from tdf_abandon join tdf_coureur using (n_coureur) join tdf_parti_coureur using (n_coureur, annee) join tdf_sponsor using (n_equipe,n_sponsor) join tdf_typeaban using (c_typeaban) join tdf_etape using (annee,n_etape) where annee=".$annee."order by n_etape";
     $cur = PreparerRequeteOCI($conn,$req);
     $res = ExecuterRequeteOCI($cur);
     $nb = LireDonneesOCI1($cur,$donnees);

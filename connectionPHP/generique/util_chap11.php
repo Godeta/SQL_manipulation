@@ -52,6 +52,10 @@ function AfficherTab($tab)
 //---------------------------------------------------------------------------------------------
 function AfficherRequete($tab, $bool)
 {
+  if(empty($tab))  {
+    echo "Pas de résultats correspondants dans la base !";
+  }
+  else {
   echo "<div class=\"table-wrapper\">\n";
   echo "<div class=\"table-scroll\">\n";
   echo "<table>\n";
@@ -61,6 +65,7 @@ function AfficherRequete($tab, $bool)
   {
     echo "<th>$key</th>\n";
   }
+  if($bool) {echo "<th> Modifier </th> <th> Supprimer </th>"; }
   echo "</tr>\n";
   echo "</thead>\n";
   echo "<tbody>\n";
@@ -68,13 +73,16 @@ function AfficherRequete($tab, $bool)
   foreach ($tab as $ligne) {
     echo "<tr>\n";
     foreach ($ligne as $valeur) {
+      //on récupère le numéro du coureur
+      if($bool) {$numCour = $ligne["N_COUREUR"]; }
       echo "<td>" . $valeur . "</td>\n";
     }
     if($bool) {
-    echo "<td> <form><button formaction='../coureurSelect.php' class =\"coureurVal\" name = \"coureurData\"
-     type =\"submit\" onclick=\"infosCoureur(this)\">";
-      echo "modifier";
+      echo "<td> <form><a href='../AffichagePHP/coureurSelect.php?id=$numCour'>";
+  echo "<img src='../img/modify.png' alt='Une image symbolisant la modification' width='40' height ='40' > </a></td>";
   echo "</button></form> </td>";
+  echo "<td> <form><a href='../AffichagePHP/choix_action_tdf_coureur.php?id=$numCour'>";
+  echo "<img src='../img/remove.png' alt='Une croix rouge indiquant la suppression' width='40' height ='40' > </a></td>";
     }
     echo "</tr>\n";
   }
@@ -86,4 +94,5 @@ function AfficherRequete($tab, $bool)
   echo "</table>";
   echo "</div>\n";
   echo "</div>\n";
+}
 }

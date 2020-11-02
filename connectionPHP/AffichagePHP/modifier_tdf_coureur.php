@@ -7,7 +7,6 @@ include_once '../Affichage/modifier_tdf_coureur.htm';
 
 include_once '../generique/fonc_oracle.php';
 
-$conn = OuvrirConnexionOCI($_SESSION['ident'],$_SESSION['mdp'], $_SESSION['site']);
 
 $coureur = new Coureur();
 
@@ -16,7 +15,7 @@ if(!empty($_POST['numC']) || (!empty($_POST['changNomA']) && !empty($_POST['chan
 {
     // vérification que le choix et la valeur de modification sont remplis
     if (!empty($_POST['changValN']) && !empty($_POST['valType'])) {
-        if($coureur->update($_POST['numC'], $_POST['changNomA'],$_POST['changPrenomA'],$_POST['changValN'],$_POST['valType'], $conn) ==0 ) {
+        if($coureur->update($_POST['numC'], $_POST['changNomA'],$_POST['changPrenomA'],$_POST['changValN'],$_POST['valType']) ==0 ) {
         echo "<br/> Modification réussie !";
         }
     }

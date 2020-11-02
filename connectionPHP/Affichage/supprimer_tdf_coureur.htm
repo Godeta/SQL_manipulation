@@ -3,43 +3,64 @@
 
 <head>
 	<meta charset="utf-8">
+	<meta name="viewport" content="width = device-width, initial-scale = 1">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
+	<script>
+		$(document).ready(function () {
+			$(".button-collapse").sideNav();
+		});
+	</script>
 	<title>Formulaire de mise à jour de base de données</title>
-	<script	 src="./formulaire_coureur.js">     </script>	
+	<script src="./formulaire_coureur.js">     </script>
 </head>
 
-<body>	
-	<ul>
-		<li>
-			<a href="../AffichagePHP/inserer_tdf_coureur.php">Insertion</a>
-		</li>
-		<li>
-			<a href="../AffichagePHP/modifier_tdf_coureur.php">Modification</a>
-		</li>
-		<li>
-			<a href="../AffichagePHP/choix_action_tdf_coureur.php">Acceuil</a>
-		</li>
-	</ul>
-		<center><h3> Formulaire supprimer un coureur</h3></center>	
-			<form id="Formulaire_coureur" name="Formulaire_coureur" action="../AffichagePHP/supprimer_tdf_coureur.php" method="post" enctype="application/x-www-form-urlencoded">
-				<pre>
-				<fieldset>					
-					<legend>Supprimer un coureur</legend>
-					<b>Selon son nom et prénom (attention aux majuscules-minuscules):</b>
-					<br/>
-					<label for="suppNom"> Nom du coureur : </label><input type="text" value="<?php verifierText("suppNom"); ?>" id="suppNom" name="suppNom" placeholder="Paul"><br />
-					<label for="suppPrenom"> Prenom du coureur : </label><input type="text" value="<?php verifierText("suppPrenom"); ?>" id="suppPrenom" name="suppPrenom" placeholder="Test1"><br />
-					
-					<b>Ou avec son numéro :</b>
-					<br />
-					<label for="numC"> Numéro du coureur : </label><input type="text" id="numC" name="numC" placeholder="2100" pattern="^[0-9]{4}$">
-				</fieldset>
-				</pre>
-					<input type="reset" name="BtRst" value="Effacer">        &nbsp;&nbsp;&nbsp;
-					<input type="submit" name="BtSubSup" value="Effectuer la suppression" onclick="return testerValidSup()">			 
-				  <br />
-				
-				
-			</form>
+<body>
+	<nav class="grey darken-2">
+		<div class="nav-wrapper">
+			<a href="../Affichage/page_accueil.htm"><img id="deco" class="responsive-img" src="../img/deco.png"
+					alt=""></a>
+			<ul id="nav-mobile" class="right hide-on-med-and-down">
+				<li><a href="../AffichagePHP/annee.php">Infos par année</a></li>
+				<li><a href="../AffichagePHP/inserer_tdf_coureur.php">Insérer un nouveau coureur</a></li>
+				<li><a href="../AffichagePHP/modifier_tdf_coureur.php">Modifier un coureur</a></li>
+				<li><a href="../AffichagePHP/choix_action_tdf_coureur.php">Recherche</a></li>
+			</ul>
+		</div>
+	</nav>
+
+	<center>
+		<h3> Supprimer un coureur</h3>
+	</center>
+	<form id="Formulaire_coureur" name="Formulaire_coureur" action="../AffichagePHP/supprimer_tdf_coureur.php"
+		method="post" enctype="application/x-www-form-urlencoded">
+		<fieldset>
+			<legend>Supprimer un coureur</legend>
+			<div class="row">
+				<b>Selon son nom et prénom (attention aux majuscules-minuscules):</b>
+			</div>
+			<div class="row">
+				<div class="col s6">
+					<label for="suppNom"> Nom du coureur : </label><input type="text"
+						value="<?php verifierText("suppNom"); ?>" id="suppNom" name="suppNom" placeholder="Paul"><br />
+				</div>
+				<div class="col s6">
+					<label for="suppPrenom"> Prenom du coureur : </label><input type="text"
+						value="<?php verifierText("suppPrenom"); ?>" id="suppPrenom" name="suppPrenom"
+						placeholder="Test1"><br />
+				</div>
+			</div>
+			<b>Ou avec son numéro :</b>
+			<br />
+			<label for="numC"> Numéro du coureur : </label><input type="text" id="numC" name="numC" placeholder="2100"
+				pattern="^[0-9]{4}$">
+		</fieldset>
+		<input class="waves-effect waves-light btn" type="reset" name="BtRst" value="Effacer"> &nbsp;&nbsp;&nbsp;
+		<input class="waves-effect waves-light btn" type="submit" name="BtSubSup" value="Effectuer la suppression" onclick="return testerValidSup()">
+		<br />
+	</form>
 </body>
 
 </html>

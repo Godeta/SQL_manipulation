@@ -22,12 +22,12 @@ function verif_mon_prenom($nom) //php
 
 function verif_annee_nai($an) //php
 {
-    return (preg_match('/^[0-9]{4}$/',$an));
+    return (preg_match('/^[0-9]*$/',$an));
 }
 // regex pour une année au format DD/MM/YYYY : #^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$#
 function verif_date_DDMMYY($an) //php
 {
-    return (preg_match('#^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{2}$#',$an));
+    return (preg_match('#^[0-9]*$#',$an));
 }
 function verif_compte($an) //php
 {
@@ -35,7 +35,7 @@ function verif_compte($an) //php
 }
 function verif_num($an) //php
 {
-    return (preg_match('/^\d*$/',$an));
+    return (preg_match('/^[0-9]*$/',$an));
 }
 function verif_annee_prem($an) //php
 {

@@ -1,12 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr">
 
-<form name="choixAnnee" action="" method="post">
-    <select name="annee">
-        <?php
-        remplirAnnee($nbLignes,$min);
-        ?>
-    </select>
-    <input type="submit" name="verifier" value="Vérifier">
-</form>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width = device-width, initial-scale = 1">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="../Affichage/materialize.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
+    <title>Classement général</title>
+    <script>
+		$(document).ready(function () {
+			$('select').material_select();
+		});
+	</script>
+</head>
 
 
-
+<body>
+    <nav class="grey darken-2">
+		<div class="nav-wrapper">
+			<a href="../Affichage/page_accueil.htm"><img id="deco" class="responsive-img" src="../img/deco.png"
+					alt=""></a>
+			<ul id="nav-mobile" class="right hide-on-med-and-down">
+				<li><a href="../AffichagePHP/inserer_tdf_coureur.php">Insérer un coureur</a></li>
+				<li><a href="../AffichagePHP/modifier_tdf_coureur.php" >Modifier un coureur</a></li>
+				<li><a href="../AffichagePHP/supprimer_tdf_coureur.php" >Supprimer coureur</a></li>
+				<li><a href="../AffichagePHP/choix_action_tdf_coureur.php" >Recherche</a></li>
+			</ul>
+		</div>
+	</nav>
+    <center>
+        <h3>Informations par année</h3>
+    </center>
+    <form name="choixAnnee" action="" method="post">
+        <div class="row">
+            <div class="col s4">
+                <select name="annee">
+                    <?php
+            $annee->remplirAnnee();
+            ?>
+                </select>
+            </div>
+        </div>
+        <input type="submit" name="verifier" value="Vérifier">
+    </form>
+</body>

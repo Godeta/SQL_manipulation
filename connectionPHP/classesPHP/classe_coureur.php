@@ -4,13 +4,15 @@ include_once '../generique/util_chap11.php';
 include_once '../generique/regex.php';
 include_once '../generique/chaine.php';
 
-//$conn = OuvrirConnexionOCI($_SESSION['ident'], $_SESSION['mdp'], $_SESSION['site']);
+
 
 class Coureur
 {
+    public $_conn;
+
     function __construct()
     {
-        
+        $this->_conn=OuvrirConnexionOCI($_SESSION['ident'], $_SESSION['mdp'], $_SESSION['site']);
     }
 
     //Vérifie si le nom et le prénom ne sont pas vide.
@@ -150,12 +152,12 @@ function changeValSelonType($typeVal,$valN) {
     //Fonction permettant de supprimer un coureur de la table tdf_coureur. 
     //Prend en paramètre le nom, le prénom, le numéro du coureur et la connection la base de donnée.
     //Renvoie 0 si exécuté, -1 si échoue.
-    public function delete($id, $nom, $prenom, $conn)
+    public function delete($id, $nom, $prenom)
     {
         $reqDelete = "DELETE FROM tdf_coureur WHERE N_COUREUR=:numC OR (NOM=:nomSup AND PRENOM=:prenomSup)";
         if($this->verifNomPrenom($nom,$prenom) || !empty($id))
         {
-            $cur = PreparerRequeteOCI($conn, $reqDelete);
+            $cur = PreparerRequeteOCI($this->_conn, $reqDelete);
             $nomSup = formatNom($nom);
             //si il n'y a pas de numéro de coureur on met -1
             $numC = empty($id)? -1  : $id;
@@ -163,7 +165,7 @@ function changeValSelonType($typeVal,$valN) {
             ajouterParamOCI($cur, ":prenomSup", $prenom, 50);
             ajouterParamOCI($cur, ":numC", $numC, 10);
             $res = ExecuterRequeteOCI($cur);
-            $comitted = ValiderTransacOCI($conn);
+            $comitted = ValiderTransacOCI($this->_conn);
             echo "<br/> Nouvelle donnée supprimée dans tdf_coureur : $nom $prenom $cur <br/>";
             return 0;
         }
@@ -176,13 +178,13 @@ function changeValSelonType($typeVal,$valN) {
     //Fonction qui insert un coureur dans la base de donnée.
     //Prend en paramètre le nom, le prénom, le numéro du coureur et la connection la base de donnée.
     //Renvoie 0 si exécuté, -1 si échoue.
-    public function insert($nom, $prenom, $annee_nai, $annee_prem,$conn)
+    public function insert($nom, $prenom, $annee_nai, $annee_prem,$date)
     {
-        $reqInsert = "INSERT INTO tdf_coureur(N_COUREUR, NOM, PRENOM, ANNEE_NAISSANCE, ANNEE_PREM) VALUES(:rid, :rnom, :rprenom, :rannee_nai, :rannee_prem)";
+        $reqInsert = "INSERT INTO tdf_coureur(N_COUREUR, NOM, PRENOM, ANNEE_NAISSANCE, ANNEE_PREM, DATE_INSERT) VALUES(:rid, :rnom, :rprenom, :rannee_nai, :rannee_prem,:rdate)";
         if($this->verifNomPrenom($nom, $prenom) && $this->verifAnnees($annee_nai,$annee_prem))
         {
-            $id = calculNumCoureur($conn);
-            $cur = PreparerRequeteOCI($conn, $reqInsert);
+            $id = calculNumCoureur($this->_conn);
+            $cur = PreparerRequeteOCI($this->_conn, $reqInsert);
             ajouterParamOCI($cur, ":rid", $id, 32);
             $nom = formatNom($nom);
             ajouterParamOCI($cur, ":rnom", $nom, 32);
@@ -190,12 +192,14 @@ function changeValSelonType($typeVal,$valN) {
             ajouterParamOCI($cur, ":rprenom", $prenom, 32);
             ajouterParamOCI($cur, ":rannee_nai", $annee_nai, 32);
             ajouterParamOCI($cur, ":rannee_prem", $annee_prem, 32);
+            ajouterParamOCI($cur, ":rdate", $date, 10);
             $res = ExecuterRequeteOCI($cur);
-            $comitted = ValiderTransacOCI($conn);
+            $comitted = ValiderTransacOCI($this->_conn);
             return 0;
         }
         else {
-            echo " Echec de l'insertion, certaines valeurs ne sont pas valides.";
+            echo "</br>";
+            echo "Echec de l'insertion, certaines valeurs ne sont pas valides.";
         }
         return -1;
     }
@@ -203,14 +207,14 @@ function changeValSelonType($typeVal,$valN) {
     //Fonction permettant de mettre à jour le nom d'un coureur de la table tdf_coureur. 
     //Prend en paramètre l'ancien nom, le nouveau nom du coureur et la connection la base de donnée.
     //Renvoie 0 si exécuté, -1 si échoue.
-    public function update($id,$ancienNom,$ancienPrenom,$valN,$typeVal,$conn)
+    public function update($id,$ancienNom,$ancienPrenom,$valN,$typeVal)
     {
         $reqUpdate = "UPDATE tdf_coureur SET $typeVal =:valN WHERE N_COUREUR=:numC OR (NOM=:ancienNom AND PRENOM=:ancienPrenom)";
         // vérification qu'ils ne soient pas vides
         if($this->verifNomPrenom($ancienNom,$ancienPrenom) || !empty($id))
         {
             if(!empty($valN) && !empty($typeVal)) {
-            $cur = PreparerRequeteOCI($conn, $reqUpdate);
+            $cur = PreparerRequeteOCI($this->_conn, $reqUpdate);
             ajouterParamOCI($cur, ":numC",$id ,30);
             ajouterParamOCI($cur, ":ancienPrenom",$ancienPrenom ,30);
             ajouterParamOCI($cur, ":ancienNom",$ancienNom, 50);
@@ -218,7 +222,7 @@ function changeValSelonType($typeVal,$valN) {
             $valN = $this->changeValSelonType($typeVal,$valN);
             ajouterParamOCI($cur, ":valN",$valN, 50);
             $res = ExecuterRequeteOCI($cur);
-            $comitted = ValiderTransacOCI($conn);
+            $comitted = ValiderTransacOCI($this->_conn);
             echo "<br/>Nouvelle donnée modifiée dans tdf_coureur : $typeVal du coureur $id $ancienNom $ancienPrenom devient -> $valN <br/>";
             return 0;
         }
@@ -235,12 +239,12 @@ function changeValSelonType($typeVal,$valN) {
     //Fonction qui selectionne un/des coureur(s) dans la base de donnée et les affiche.
     //Prend en paramètre le nom, le prénom du coureur et la connection la base de donnée.
     //Renvoie rien.
-    public function select($id, $nom, $prenom, $conn)
+    public function select($id, $nom, $prenom)
     {
         $nom = formatNom($nom);
         $prenom = formatPrenom($prenom);
         $reqSelect = "SELECT nom, prenom FROM tdf_coureur where N_COUREUR=:numC OR (NOM like ':nom %' OR PRENOM like ':prenom %') ";
-        $cur = PreparerRequeteOCI($conn, $reqSelect);
+        $cur = PreparerRequeteOCI($this->_conn, $reqSelect);
         ajouterParamOCI($cur, ":numC",$id ,30);
         ajouterParamOCI($cur, ":nom",$nom ,30);
         ajouterParamOCI($cur, ":prenom",$prenom ,30);
@@ -265,6 +269,14 @@ function changeValSelonType($typeVal,$valN) {
             echo $valeur." ";
             echo "</button></form><br/>";
         }
+    }
+
+    public function afficherPalmares($ncoureur){
+        $req="select annee,n_etape,ville_d as départ,ville_a as arrivée,heure,minute,seconde from tdf_coureur join tdf_temps using (n_coureur)join tdf_etape using (annee,n_etape) where rang_arrivee=1 and n_coureur=".$ncoureur."order by annee";        
+        $cur = PreparerRequeteOCI($this->_conn, $req);
+        $res = ExecuterRequeteOCI($cur);
+        $nb = LireDonneesOCI1($cur, $donnees);
+        AfficherRequete($donnees,false);
     }
 }
 ?>

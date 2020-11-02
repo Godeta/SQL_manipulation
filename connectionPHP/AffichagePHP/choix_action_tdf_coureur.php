@@ -19,4 +19,20 @@ include_once '../Affichage/choix_action_tdf_coureur.htm';
 //         }
 // }
 
+//lorsque l'on clique sur le bouton supprimer renvoie sur la page
+if (!empty($_GET['id'])) {
+    $numC = $_GET['id'];
+
+$coureur = new Coureur();
+
+if($coureur->delete($numC, "","") ==0 ) {
+    // redirige vers la même page sans garder la même valeur de get pour arrêter d'afficher le résultat de la suppression
+    $location="../AffichagePHP/choix_action_tdf_coureur.php";
+    echo '<META HTTP-EQUIV="refresh" CONTENT="0;URL='.$location.'">';
+    echo "<br/> Suppression réussie !";
+    exit;
+}
+
+}
+
 ?>
