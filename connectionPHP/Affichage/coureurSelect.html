@@ -6,23 +6,34 @@
     <title>Informations coureur</title>
     <script src="./coureurSelect.js"> </script>
     <center>
-        <h3> Informations ou modifications du coureur : <?php echo ($numC);?></h3>
+        <h3> Informations du coureur n°<?php echo ($numC);?></h3>
     </center>
 </head>
 
 <body>
-    <pre>
+    
+    <li><a href="../AffichagePHP/choix_action_tdf_coureur.php">Recherche</a></li>
     <form id="Formulaire_coureur" name="Formulaire_coureur" action = "" method="post" enctype="multipart/form-data">
 	<fieldset>
-          Numéro : <?php echo ($numC);?>
+          Numéro : <?php echo ($numC);?> <br/>
            <!-- <?php echo "test"; ?> -->
           Nom : <?php echo ($nomC); ?>
-          Prenom : <?php echo ($prenomC); ?>
+          Prenom : <?php echo ($prenomC); ?> 
           Année de naissance : <?php echo ($annee_nai); ?>
+          Nationalité : <?php echo ($natio); ?>
+          <br/>
+          Année de première participation : <?php echo ($annee_pre); ?> <br/>
+          Equipes dans lequel il a couru : <?php AfficherRequete($equipes,false); ?>
+          
 	</fieldset>
-	</pre>
     <br />
     <pre>
+        <div>
+            <h2>Palmarès au tour de France</h2>
+            <?php
+            $coureur->afficherPalmares($numC);
+            ?>
+        </div>
 	<form id="Formulaire_coureur" name="Formulaire_coureur" action="modifier_tdf_coureur.php" method="post" enctype="application/x-www-form-urlencoded">
         <pre>
         <fieldset>

@@ -16,11 +16,26 @@ $req = "SELECT * from tdf_coureur where n_coureur = $numC";
 $nomC = $donnees[0]["NOM"];
 $prenomC = $donnees[0]["PRENOM"];
 $annee_nai = $donnees[0]["ANNEE_NAISSANCE"];
+$annee_pre = $donnees[0]["ANNEE_PREM"];
 
+// requête pour avoir la nationalité
+$req = "SELECT nom from tdf_nation where code_cio = (SELECT code_cio from tdf_app_nation where n_coureur = $numC)";
+$cur = PreparerRequeteOCI($conn, $req);
+$res = ExecuterRequeteOCI($cur);
+$nb = LireDonneesOCI1($cur, $donnees);
+$natio = $donnees[0]["NOM"];
 
-include_once "../Affichage/coureurSelect.html";
+// récupérer les équipes
+$req = "SELECT DISTINCT n_coureur,nom as \"NOM DE L'EQUIPE \" from tdf_parti_coureur join tdf_sponsor using (n_equipe) where n_coureur = $numC ";
+$cur = PreparerRequeteOCI($conn, $req);
+$res = ExecuterRequeteOCI($cur);
+$nb = LireDonneesOCI1($cur, $donnees);
+$equipes = $donnees;
 
 $coureur = new Coureur();
+include_once "../Affichage/coureurSelect.html";
+
+
 
 // vérification que l'identification du coureur est remplie
 if(!empty($numC) )

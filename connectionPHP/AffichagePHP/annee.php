@@ -10,12 +10,10 @@ session_start();
 
     if (!empty($_POST)) {
         include_once '../Affichage/annee.htm';
-        if (isset($_POST['annee'])) {
+        if (isset($_POST['annee']) && isset($_POST['classement'])) {
             $anneeChoisie = $_POST['annee'];
-            $annee->classementGeneral($anneeChoisie);
-            $annee->participants($anneeChoisie);
-            $annee->gagnantEtapes($anneeChoisie);
-            $annee->abandons($anneeChoisie);
+            $choix= $_POST['classement'];
+            $annee->choix($choix,$anneeChoisie);
         }
     } else
         include_once '../Affichage/annee.htm';
