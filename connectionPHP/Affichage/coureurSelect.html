@@ -73,10 +73,10 @@
             <label for="changValN"> Nouvelle valeur : </label><input value="<?php verifierText("changValN"); ?>" type="text" id="changValN" name="changValN" placeholder="Titouan"><br />
             <b>Champ à modifier : </b> 
             <select name="valType" size="1">
-                <option value="NOM"> Nom</option>
-                <option value="PRENOM"> Prenom</option>
-                <option value="ANNEE_PREM"> Annee de première participation</option>
-                <option value="ANNEE_NAISSANCE"> Année de naissance</option>
+                <option value="NOM" <?php VerifierSelect("valType","NOM");?>> Nom</option>
+                <option value="PRENOM" <?php VerifierSelect("valType","PRENOM");?>> Prenom</option>
+                <option value="ANNEE_PREM" <?php VerifierSelect("valType","ANNEE_PREM");?>> Annee de première participation</option>
+                <option value="ANNEE_NAISSANCE" <?php VerifierSelect("valType","ANNEE_NAISSANCE");?>> Année de naissance</option>
             </select>
         </fieldset>	
         <input class="waves-effect waves-light btn" type="reset" name="BtRst" value="Effacer">        &nbsp;&nbsp;&nbsp;

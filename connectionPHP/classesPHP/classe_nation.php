@@ -13,10 +13,14 @@ class Nation
 
     function remplirNation($donnees)
     {
-        echo "<option value=\"NULL\" selected>";
-            echo "</option>";
+        echo "<option value=\"NULL\"";
+        echo VerifierSelect("pays","NULL");
+        echo ">";
+        echo "</option>";
         for ($i = 0; $i < count($donnees); $i++) {
-            echo "<option value=\"".$donnees[$i]['CODE_CIO']."\" <?php VerifierSelect(\"pays\", \"".$donnees[$i]['CODE_CIO']."\");?>>";
+            echo "<option value=\"".$donnees[$i]['CODE_CIO']."\"";
+            echo VerifierSelect("pays",$donnees[$i]['CODE_CIO']);
+            echo ">";
             echo $donnees[$i]['NOM'];
             echo "</option>";
         }

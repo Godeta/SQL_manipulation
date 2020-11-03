@@ -1,7 +1,5 @@
 <?php
 session_start();
-?>
-<?php
     include_once '../classesPHP/classe_annee.php';
     include_once '../generique/chaine.php';
     include_once '../generique/fonc_oracle.php';
@@ -17,6 +15,3 @@ session_start();
         }
     } else
         include_once '../Affichage/annee.htm';
-    ?>
-
-</html>

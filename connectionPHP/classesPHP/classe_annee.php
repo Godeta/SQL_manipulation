@@ -1,5 +1,6 @@
 <?php
 
+include_once '../generique/util_chap9.php';
 include_once '../generique/util_chap11.php';
 include_once '../generique/chaine.php';
 
@@ -39,7 +40,9 @@ class Annee
         $min = $this->calculAnneeMin();
         for ($i = 0; $i < $nbLignes; $i++) {
             $temp = $min + $i;
-            echo '<option value="' . $temp . '">';
+            echo "<option value=\"" . $temp ."\"";
+            echo VerifierSelect("annee",$temp);
+            echo ">";
             echo $temp;
             echo '</option>';
         }
@@ -49,7 +52,7 @@ class Annee
     {
         echo "<h1>Classement général</h1>";
         echo "</br>";
-        $req = "select rang_arrivee as place,dossard,nom,prenom,code_pays as nationalite,equipe,temps as temps_en_s from tdf_classements_generaux where annee=" . $annee . " order by rang_arrivee";
+        $req = "select classement,n_coureur as \"N°COUREUR\",nom,prenom,temps_total as \"TEMPS TOTAL EN SECONDE\" from mon_classement_".$annee;
         $cur = PreparerRequeteOCI($this->_conn, $req);
         $res = ExecuterRequeteOCI($cur);
         $nb = LireDonneesOCI1($cur, $donnees);
@@ -71,7 +74,7 @@ class Annee
     {
         echo "<h1>Participants</h1>";
         echo "</br>";
-        $req = "select n_dossard,tdf_coureur.nom as nom,prenom,code_cio as nationalite,tdf_sponsor.nom as nom_equipe from tdf_parti_coureur join tdf_sponsor using (n_equipe,n_sponsor) join tdf_coureur using (n_coureur) where annee=" . $annee . " order by n_dossard";
+        $req = "select n_dossard as \"N°DOSSARD\",tdf_coureur.nom as nom,prenom,code_cio as nationalite,tdf_sponsor.nom as \"NOM D EQUIPE \" from tdf_parti_coureur join tdf_sponsor using (n_equipe,n_sponsor) join tdf_coureur using (n_coureur) where annee=" . $annee . " order by n_dossard";
         $cur = PreparerRequeteOCI($this->_conn, $req);
         $res = ExecuterRequeteOCI($cur);
         $nb = LireDonneesOCI1($cur, $donnees);
@@ -82,7 +85,7 @@ class Annee
     {
         echo "<h1>Abandons</h1>";
         echo "</br>";
-        $req = "select n_dossard,tdf_coureur.nom as nom,prenom,code_cio as nationalite,tdf_sponsor.nom as nom_equipe,n_etape as etape,libelle as raison from tdf_abandon join tdf_coureur using (n_coureur) join tdf_parti_coureur using (n_coureur, annee) join tdf_sponsor using (n_equipe,n_sponsor) join tdf_typeaban using (c_typeaban) join tdf_etape using (annee,n_etape) where annee=" . $annee . "order by n_etape";
+        $req = "select n_dossard as \"N°DOSSARD\",tdf_coureur.nom as nom,prenom,code_cio as nationalite,tdf_sponsor.nom as \"NOM D EQUIPE\",n_etape as etape,libelle as raison from tdf_abandon join tdf_coureur using (n_coureur) join tdf_parti_coureur using (n_coureur, annee) join tdf_sponsor using (n_equipe,n_sponsor) join tdf_typeaban using (c_typeaban) join tdf_etape using (annee,n_etape) where annee=" . $annee . "order by n_etape";
         $cur = PreparerRequeteOCI($this->_conn, $req);
         $res = ExecuterRequeteOCI($cur);
         $nb = LireDonneesOCI1($cur, $donnees);

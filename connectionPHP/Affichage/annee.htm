@@ -27,6 +27,7 @@
                 <li><a href="../AffichagePHP/inserer_tdf_coureur.php">Insérer un coureur</a></li>
                 <li><a href="../AffichagePHP/modifier_tdf_coureur.php">Modifier un coureur</a></li>
                 <li><a href="../AffichagePHP/supprimer_tdf_coureur.php">Supprimer coureur</a></li>
+                <li><a href="../AffichagePHP/infosGenerales.php">Infos générales</a></li>
                 <li><a href="../AffichagePHP/choix_action_tdf_coureur.php">Recherche</a></li>
             </ul>
         </div>
@@ -46,25 +47,25 @@
             <br>
             <div class="col s2">
                 <label>
-                    <input type="checkbox" class="filled-in" name="classement[]" value="classementGeneral" />
+                    <input type="checkbox" class="filled-in" name="classement[]" <?php cocherCase("classement","classementGeneral");?> value="classementGeneral" />
                     <span>Classement Général</span>
                 </label>
             </div>
             <div class="col s2">
                 <label>
-                    <input type="checkbox" class="filled-in" name="classement[]" value="gagnantEtapes" />
+                    <input type="checkbox" class="filled-in" name="classement[]" <?php cocherCase("classement","gagnantEtapes");?> value="gagnantEtapes" />
                     <span>Gagnant par étape</span>
                 </label>
             </div>
             <div class="col s2">
                 <label>
-                    <input type="checkbox" class="filled-in" name="classement[]" value="participants" />
+                    <input type="checkbox" class="filled-in" name="classement[]" <?php cocherCase("classement","participants");?> value="participants" />
                     <span>Liste des participants</span>
                 </label>
             </div>
             <div class="col s2">
                 <label>
-                    <input type="checkbox" class="filled-in" name="classement[]" value="abandons" />
+                    <input type="checkbox" class="filled-in" name="classement[]" <?php cocherCase("classement","abandons");?> value="abandons" />
                     <span>Liste des abandons</span>
                 </label>
             </div>

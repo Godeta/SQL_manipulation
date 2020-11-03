@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width = device-width, initial-scale = 1">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="../Affichage/materialize.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
+    <title>Informations générales</title>
+</head>
+
+<body>
+    <nav class="grey darken-2">
+        <div class="nav-wrapper">
+            <a href="../Affichage/page_accueil.htm"><img id="deco" class="responsive-img" src="../img/deco.png"
+                    alt=""></a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="../AffichagePHP/inserer_tdf_coureur.php">Insérer un coureur</a></li>
+                <li><a href="../AffichagePHP/modifier_tdf_coureur.php">Modifier un coureur</a></li>
+                <li><a href="../AffichagePHP/supprimer_tdf_coureur.php">Supprimer coureur</a></li>
+                <li><a href="../AffichagePHP/annee.php">Infos par année</a></li>
+                <li><a href="../AffichagePHP/choix_action_tdf_coureur.php">Recherche</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div>
+       <?php $infos->plusDeVictoires(); ?>
+    </div>
+
+</body>
