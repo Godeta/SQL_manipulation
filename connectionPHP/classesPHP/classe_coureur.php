@@ -15,6 +15,27 @@ class Coureur
         $this->_conn=OuvrirConnexionOCI($_SESSION['ident'], $_SESSION['mdp'], $_SESSION['site']);
     }
 
+    //Vérifie si le coureur est déjà présent dans la table TDF_COUREUR.
+    //Prend en paramètre le nom et le prénom du coureur.
+    //Renvoie "True" si existe, "False" si non.
+    public function verifCoureurExiste($nom, $prenom)
+    {
+        $req = "SELECT Count(*) as NBCDT FROM TDF_COUREUR WHERE NOM==:rnom AND PRENOM==:rprenom";
+        $cur = PreparerRequeteOCI($this->_conn, $req);
+        ajouterParamOCI($cur, ':rnom', $nom, 32);
+        ajouterParamOCI($cur, ':rprenom', $prenom, 32);
+        $res = ExecuterRequeteOCI($cur);
+        $nbCDT =  LireDonneesOCI($res, $donnees);
+        if($donnees[0]['NBCDT'] == 0)
+        {
+            return False;
+        }
+        else
+        {
+            return True;
+        }
+    }
+
     //Vérifie si le nom et le prénom ne sont pas vide.
     //Prend en paramètre le nom et le prénom à vérifier.
     //Renvoie "True" si non vide, "False" si vide.

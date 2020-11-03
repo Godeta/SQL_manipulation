@@ -16,7 +16,7 @@ class Nation
         echo "<option value=\"NULL\" selected>";
             echo "</option>";
         for ($i = 0; $i < count($donnees); $i++) {
-            echo "<option value=\"".$donnees[$i]['CODE_CIO']."\">";
+            echo "<option value=\"".$donnees[$i]['CODE_CIO']."\" <?php VerifierSelect(\"pays\", \"".$donnees[$i]['CODE_CIO']."\");?>>";
             echo $donnees[$i]['NOM'];
             echo "</option>";
         }

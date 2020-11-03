@@ -33,21 +33,18 @@
 	<form id="Formulaire_coureur" name="Formulaire_coureur" action="../AffichagePHP/choix_action_tdf_coureur.php"
 		method="post" enctype="application/x-www-form-urlencoded">
 		<div class="row">
-			<div class="col s8">
 				<label>Recherche : </label>
-				<input type="text" id="nom" name="nom" value="" placeholder=""><br />
+				<div class="col s2">
+				<label for="NOM"> Nom : </label><input value="<?php verifierText("NOM"); ?>" type="text" id="NOM" name="NOM" placeholder="Titouan"><br />
 			</div>
-			<div class="col s4">
-				<label>Critère de recherche</label>
-				<select name="colonne" id="colonne" onchange="changePlaceHolder()" size="1">
-					<option value="NOM"> Nom</option>
-					<option value="PRENOM"> Prenom</option>
-					<option value="N_COUREUR"> Numéro de coureur</option>
-					<option value="ANNEE_PREM"> Annee de première participation</option>
-					<option value="ANNEE_NAISSANCE"> Année de naissance</option>
-					<option value="COMPTE_ORACLE"> Compte Oracle</option>
-					<option value="DATE_INSERT"> Date d'insertion dans la base</option>
-				</select>
+			<div class="col s2">
+				<label for="PRENOM"> Prenom : </label><input value="<?php verifierText("PRENOM"); ?>" type="text" id="PRENOM" name="PRENOM" placeholder="Titouan"><br />
+			</div>
+			<div class="col s2">
+				<label for="ANNEE_PREM"> Annee de première participation : </label><input value="<?php verifierText("ANNEE_PREM"); ?>" type="text" id="ANNEE_PREM" name="ANNEE_PREM" placeholder="Titouan"><br />
+			</div>
+				<div class="col s2">
+				<label for="ANNEE_NAISSANCE"> Année de naissance : </label><input value="<?php verifierText("ANNEE_NAISSANCE"); ?>" type="text" id="ANNEE_NAISSANCE" name="ANNEE_NAISSANCE" placeholder="Titouan"><br />
 			</div>
 		</div>
 
@@ -58,10 +55,10 @@
 	</form>
 
 		<script>
-			function chargerDonnee(nom, colonne) {
+			function chargerDonnee(nom, prenom, annee_nai, annee_pre) {
 				var xhr = new XMLHttpRequest();
 				xhr.open('GET', '../AffichagePHP/affichageCoureurs.php/?nom=' +
-					nom + '&column=' + colonne);
+					nom + '&prenom=' + prenom + '&annee_nai=' +annee_nai + '&annee_pre=' + annee_pre);
 
 				var Lire = function () {
 					if (xhr.readyState === 4 && xhr.status === 200) {
@@ -71,61 +68,18 @@
 				xhr.addEventListener("readystatechange", Lire, false);
 				xhr.send(null);
 			}
-
-			var nomCoureur;
-			//défini dans afficherCoureur
-			var infosCoureur = function (id) {
-				nomCoureur = id.value;
-				localStorage["nomC"] = nomCoureur;
-				// alert("Tu as cliqué sur le coureur : " + nomCoureur);
-			};
-			var elt1 = document.getElementById('nom');
-			var colonne = document.getElementById('colonne');
+			var nom = document.getElementById('NOM');
+			var prenom = document.getElementById('PRENOM');
+			var annee_nai = document.getElementById('ANNEE_NAISSANCE');
+			var annee_pre = document.getElementById('ANNEE_PREM');
 			var place = "";
-
-			var changePlaceHolder = function () {
-				switch (colonne.value) {
-					case 'N_COUREUR':
-						place = "440"
-						break;
-					case 'NOM':
-						place = "PAUL"
-						break;
-					case 'PRENOM':
-						place = "Titouan"
-						break;
-					case 'ANNEE_NAISSANCE':
-						place = "1968"
-						break;
-					case 'ANNEE_PREM':
-						place = "1992"
-						break;
-					case 'COMPTE_ORACLE':
-						place = "IUT218"
-						break;
-					case 'DATE_INSERT':
-						place = "17/07/16"
-						break;
-					default:
-						place = "WTF";
-						break;
-				}
-				document.getElementsByName('nom')[0].placeholder = place;
-			}
-			changePlaceHolder();
 			var maFonction1 = function () {
-				chargerDonnee(elt1.value, colonne.value);
-
-
-				// //bouton défini dans afficherCoureur
-				// var coureurVal = document.getElementsByName('coureurData');
-
-				// coureurVal.addEventListener("click", infosCoureur);
+				chargerDonnee(nom.value, prenom.value,annee_nai.value,annee_pre.value);
 			};
-
-
-
-			elt1.addEventListener("keyup", maFonction1, false);
+			nom.addEventListener("keyup", maFonction1, false);
+			prenom.addEventListener("keyup", maFonction1, false);
+			annee_nai.addEventListener("keyup", maFonction1, false);
+			annee_pre.addEventListener("keyup", maFonction1, false);
 		</script>
 		<script type="text/javascript" src="js/materialize.min.js"></script>
 </body>

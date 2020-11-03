@@ -23,10 +23,16 @@ $req = "SELECT nom from tdf_nation where code_cio = (SELECT code_cio from tdf_ap
 $cur = PreparerRequeteOCI($conn, $req);
 $res = ExecuterRequeteOCI($cur);
 $nb = LireDonneesOCI1($cur, $donnees);
+$natio = "";
+if(!empty($donnees)){
 $natio = $donnees[0]["NOM"];
+}
 
 // récupérer les équipes
-$req = "SELECT DISTINCT n_coureur,nom as \"NOM DE L'EQUIPE \" from tdf_parti_coureur join tdf_sponsor using (n_equipe) where n_coureur = $numC ";
+$req = "SELECT DISTINCT tdf_sponsor.nom as \"NOM DE L'EQUIPE \",annee_sponsor as \"ANNEE DEBUT \" from tdf_parti_coureur
+join tdf_sponsor using (n_equipe)
+where n_coureur= $numC
+order by annee_sponsor ";
 $cur = PreparerRequeteOCI($conn, $req);
 $res = ExecuterRequeteOCI($cur);
 $nb = LireDonneesOCI1($cur, $donnees);
