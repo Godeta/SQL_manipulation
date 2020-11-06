@@ -4,9 +4,9 @@ session_start();
 include_once '../classesPHP/classe_coureur.php';
 include_once '../generique/util_chap9.php';
 include_once '../generique/fonc_oracle.php';
+include_once '../classesPHP/classe_nation.php';
+$nation = new Nation();
 include_once '../Affichage/choix_action_tdf_coureur.htm';
-
-
 // $conn = OuvrirConnexionOCI($_SESSION['ident'],$_SESSION['mdp'], $_SESSION['site']);
 
 // $coureur = new Coureur();

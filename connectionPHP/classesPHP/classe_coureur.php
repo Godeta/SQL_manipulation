@@ -42,18 +42,18 @@ class Coureur
         {
             if (verif_taille($prenom) && verif_mon_prenom($prenom)) //Vérifie si le prénom dépasse la taille réglementaire et passe la regex. 
             {
-                echo "<br/> Prénom valide <br/>";
+                echo "<br/> <span class =\"feedbackPositif\"> Prénom valide <br/></span>";
                 $verifPrenom = true;
             } else {
-                echo "<br/> Prénom invalide <br/>";
+                echo "<br/><span class =\"feedbackNegatif\">  Prénom invalide </span><br/>";
                 $verifPrenom = false;
             }
             if (verif_taille($nom) && verif_mon_nom($nom)) //Vérifie si le nom dépasse la taille réglementaire et passe la regex. 
             {
-                echo "<br/> Nom valide <br/>";
+                echo "<br/> <span class =\"feedbackPositif\">  Nom valide </span><br/>";
                 $verifNom = true;
             } else {
-                echo "<br/> Nom invalide <br/>";
+                echo "<br/><span class =\"feedbackNegatif\">  Nom invalide </span><br/>";
                 $verifNom = false;
             }
             if ($verifNom ==  true && $verifPrenom == true) {
@@ -73,6 +73,7 @@ class Coureur
     {
         if ($annee_nai == null || verif_annee_nai($annee_nai)) {
             if ($annee_prem == null || verif_annee_prem($annee_prem)) {
+                if(($annee_prem >= $annee_nai+20 && $annee_nai<= 2020) || $annee_prem == null || $annee_nai == null )
                 return true;
             } else {
                 echo "L'année de première participation $annee_prem ne respecte pas le format imposé !";
@@ -195,7 +196,7 @@ class Coureur
                 echo "<br/> Nouvelle donnée supprimée dans tdf_coureur : $nom $prenom $cur <br/>";
                 return 0;
             } else {
-                echo "<br/> Suppression du coureur échouée : il a une participation dans le tour de France :/ <br/>";
+                echo "<script> alert(\"Suppression du coureur échouée : il a une participation dans le tour de France :/\"); </script>";
                 return -1;
             }
         }
@@ -210,29 +211,46 @@ class Coureur
     public function insert($nom, $prenom, $annee_nai, $annee_prem, $date)
     {
         $reqInsert = "INSERT INTO tdf_coureur(N_COUREUR, NOM, PRENOM, ANNEE_NAISSANCE, ANNEE_PREM, DATE_INSERT) VALUES(:rid, :rnom, :rprenom, :rannee_nai, :rannee_prem,:rdate)";
-        if (!$this->coureurExiste($nom, $prenom)) {
-            if ($this->verifNomPrenom($nom, $prenom) && $this->verifAnnees($annee_nai, $annee_prem)) {
-                $id = calculNumCoureur($this->_conn);
-                $cur = PreparerRequeteOCI($this->_conn, $reqInsert);
-                ajouterParamOCI($cur, ":rid", $id, 32);
-                $nom = formatNom($nom);
-                ajouterParamOCI($cur, ":rnom", $nom, 32);
-                $prenom = formatPrenom($prenom);
-                ajouterParamOCI($cur, ":rprenom", $prenom, 32);
-                ajouterParamOCI($cur, ":rannee_nai", $annee_nai, 32);
-                ajouterParamOCI($cur, ":rannee_prem", $annee_prem, 32);
-                ajouterParamOCI($cur, ":rdate", $date, 10);
-                $res = ExecuterRequeteOCI($cur);
-                $comitted = ValiderTransacOCI($this->_conn);
-                return 0;
-            } else {
-                echo "</br>";
-                echo "Echec de l'insertion, certaines valeurs ne sont pas valides.";
+        if(!empty($_POST['nouvNom']) )
+    {
+        if(!empty($_POST['nouvPrenom'])) {
+            if(!empty($_POST['pays']) && $_POST['pays']!="NULL"){
+            if (!$this->coureurExiste($nom, $prenom)) {
+                if ($this->verifNomPrenom($nom, $prenom) && $this->verifAnnees($annee_nai, $annee_prem)) {
+                    $id = calculNumCoureur($this->_conn);
+                    $cur = PreparerRequeteOCI($this->_conn, $reqInsert);
+                    ajouterParamOCI($cur, ":rid", $id, 32);
+                    $nom = formatNom($nom);
+                    ajouterParamOCI($cur, ":rnom", $nom, 32);
+                    $prenom = formatPrenom($prenom);
+                    ajouterParamOCI($cur, ":rprenom", $prenom, 32);
+                    ajouterParamOCI($cur, ":rannee_nai", $annee_nai, 32);
+                    ajouterParamOCI($cur, ":rannee_prem", $annee_prem, 32);
+                    ajouterParamOCI($cur, ":rdate", $date, 10);
+                    $res = ExecuterRequeteOCI($cur);
+                    $comitted = ValiderTransacOCI($this->_conn);
+                    return 0;
+                } else {
+                    echo "</br>";
+                    echo "<span class=\"feedbackNegatif\">Echec de l'insertion, certaines valeurs ne sont pas valides.</span>";
+                }
+            }
+            else{
+                echo "<span class=\"feedbackNegatif\">Insertion impossible, coureur déjà existant</span>";
             }
         }
-        else{
-            echo "Coureur déjà existant";
-        }
+        else {
+            echo "<span class = \"feedbackNegatif\">La nationalité n'est pas remplie !</span>";
+    }
+    }
+    else {
+        echo "<span class = \"feedbackNegatif\">Le prénom est vide !</span>";
+    }
+}
+
+else {
+    echo "<span class = \"feedbackNegatif\">Le nom est vide !</span>";
+}
         return -1;
     }
 

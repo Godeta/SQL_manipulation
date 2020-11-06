@@ -10,22 +10,13 @@ include_once '../Affichage/inserer_tdf_coureur.htm';
 
 include_once '../generique/fonc_oracle.php';
 
-
-
 $date = date('d/m/Y', time());
-
-if(!empty($_POST['nouvNom']) && !empty($_POST['nouvPrenom']))
-{
+if(isset($_POST['annee_naissance'])) {
         if($coureur->insert($_POST['nouvNom'], $_POST['nouvPrenom'],$_POST['annee_naissance'], $_POST['annee_prem'],$date) ==0 ) {
-                echo "<br/> Insertion réussie !";
-                if(!empty($_POST['pays'])){
-                        if ($_POST['pays']!="NULL"){
+                echo "<span class = \"feedbackPositif\"><br/> Insertion réussie !</span>";
                                 $nation->insertion($_POST['pays']);
-                        }
                 }
+
         }
-}
-
-
 
 ?>

@@ -5,16 +5,10 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width = device-width, initial-scale = 1">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-	<link rel="stylesheet" href="../Affichage/materialize.css">
-	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
-	<script>
-		$(document).ready(function () {
-			$('select').material_select();
-		});
-	</script>
+	<link rel="stylesheet" href="../Affichage/materialize.min.css">
 	<title>Formulaire de mise à jour de base de données</title>
 	<script src="../Affichage/formulaire_coureur.js"></script>
+	<!-- librairie js à la fin du body voir la doc officielle -->
 </head>
 
 <body>
@@ -22,18 +16,37 @@
 		<div class="nav-wrapper">
 			<a href="../Affichage/page_accueil.htm" ><img id="deco" class="responsive-img" src="../img/deco.png" alt=""></a>
 			<ul id="nav-mobile" class="right hide-on-med-and-down">
-				<li><a href="../AffichagePHP/annee.php">Infos par année</a></li>
-				<li><a href="../AffichagePHP/inserer_tdf_coureur.php" >Insérer un nouveau coureur</a></li>
-				<li><a href="../AffichagePHP/modifier_tdf_coureur.php" >Modifier un coureur</a></li>
-				<li><a href="../AffichagePHP/supprimer_tdf_coureur.php" >Supprimer coureur</a></li>
+				<li><a class='dropdown-trigger btn' href='#' data-target='dropdown1'>Insertion</a>
+                    <ul id='dropdown1' class='dropdown-content'>
+                        <li><a href="../AffichagePHP/inserer_tdf_coureur.php">Coureur</a></li>
+                        <li><a href="../AffichagePHP/inserer_tdf_equipe.php">Equipe</a></li>
+                        <li><a href="../AffichagePHP/inserer_tdf_sponsor.php">Sponsor</a></li>
+                    </ul>
+				</li>
+				<li><a href="../AffichagePHP/modifier_tdf_coureur.php">Modifier un coureur</a></li>
+				<li><a href="../AffichagePHP/supprimer_tdf_coureur.php">Supprimer coureur</a></li>
+                <li><a href="../AffichagePHP/annee.php">Infos par année</a></li>
+                <li><a href="../AffichagePHP/infosGenerales.php">Infos générales</a></li><!-- Modifier -->
 			</ul>
 		</div>
 	</nav>
-
+	
 	<form id="Formulaire_coureur" name="Formulaire_coureur" action="../AffichagePHP/choix_action_tdf_coureur.php"
 		method="post" enctype="application/x-www-form-urlencoded">
+		<div class="row ">
+			<div class="col s6">
+			<label for="choixTable"> Choix de la table : </label>
+		<select class="browser-default" name="choixTable" size="1">
+			<option <?php VerifierSelect("valType","Coureur");?> value="Coureur"> Coureur</option>
+			<option <?php VerifierSelect("valType","Equipe");?> value="Equipe"> Equipe</option>
+			<option <?php VerifierSelect("valType","Etape");?> value="Etape"> Etape</option>
+			<option <?php VerifierSelect("valType","Tour");?> value="Tour"> Tour</option>
+		</select>
+			</div><div class="col s6">
+		<img src="../img/biker.png">
+		</div>
+	</div>
 		<div class="row">
-				<label>Recherche : </label>
 				<div class="col s2">
 				<label for="NOM"> Nom : </label><input value="<?php verifierText("NOM"); ?>" type="text" id="NOM" name="NOM" placeholder="Titouan"><br />
 			</div>
@@ -41,11 +54,24 @@
 				<label for="PRENOM"> Prenom : </label><input value="<?php verifierText("PRENOM"); ?>" type="text" id="PRENOM" name="PRENOM" placeholder="Titouan"><br />
 			</div>
 			<div class="col s2">
-				<label for="ANNEE_PREM"> Annee de première participation : </label><input value="<?php verifierText("ANNEE_PREM"); ?>" type="text" id="ANNEE_PREM" name="ANNEE_PREM" placeholder="Titouan"><br />
+				<label for="ANNEE_PREM"> Annee de première participation : </label><input value="<?php verifierText("ANNEE_PREM"); ?>" type="number" id="ANNEE_PREM" name="ANNEE_PREM" placeholder="Titouan"><br />
 			</div>
 				<div class="col s2">
-				<label for="ANNEE_NAISSANCE"> Année de naissance : </label><input value="<?php verifierText("ANNEE_NAISSANCE"); ?>" type="text" id="ANNEE_NAISSANCE" name="ANNEE_NAISSANCE" placeholder="Titouan"><br />
+				<label for="ANNEE_NAISSANCE"> Année de naissance : </label><input value="<?php verifierText("ANNEE_NAISSANCE"); ?>" type="number" id="ANNEE_NAISSANCE" name="ANNEE_NAISSANCE" placeholder="Titouan"><br />
 			</div>
+			<div class="col s2">
+			<label for="NUMERO"> Numéro de coureur : </label><input value="<?php verifierText("NUMERO"); ?>" type="number" id="NUMERO" name="NUMERO" placeholder="2050"><br />
+			</div>
+			<div class="col s2">
+			<label for="pays"> Nationalité : </label>
+			<select class="browser-default" name="pays" id ="pays">
+				<?php 
+				$donnees=$nation->nationalite();
+				$nation->remplirNation($donnees);
+		?>
+			</select>
+			</div>
+			
 		</div>
 
 		<p id="resultat">
@@ -55,10 +81,10 @@
 	</form>
 
 		<script>
-			function chargerDonnee(nom, prenom, annee_nai, annee_pre) {
+			function chargerDonnee(nom, prenom, annee_nai, annee_pre, numC, pays) {
 				var xhr = new XMLHttpRequest();
 				xhr.open('GET', '../AffichagePHP/affichageCoureurs.php/?nom=' +
-					nom + '&prenom=' + prenom + '&annee_nai=' +annee_nai + '&annee_pre=' + annee_pre);
+					nom + '&prenom=' + prenom + '&annee_nai=' +annee_nai + '&annee_pre=' + annee_pre + '&numC=' + numC + '&nation='+ pays);
 
 				var Lire = function () {
 					if (xhr.readyState === 4 && xhr.status === 200) {
@@ -72,16 +98,38 @@
 			var prenom = document.getElementById('PRENOM');
 			var annee_nai = document.getElementById('ANNEE_NAISSANCE');
 			var annee_pre = document.getElementById('ANNEE_PREM');
+			var numC = document.getElementById('NUMERO');
+			var pays = document.getElementById('pays');
 			var place = "";
+			var dropdowns = document.getElementsByClassName('.dropdown-trigger');
 			var maFonction1 = function () {
-				chargerDonnee(nom.value, prenom.value,annee_nai.value,annee_pre.value);
+				chargerDonnee(nom.value, prenom.value,annee_nai.value,annee_pre.value, numC.value,pays.value);
 			};
 			nom.addEventListener("keyup", maFonction1, false);
+			numC.addEventListener("keyup", maFonction1, false);
 			prenom.addEventListener("keyup", maFonction1, false);
 			annee_nai.addEventListener("keyup", maFonction1, false);
 			annee_pre.addEventListener("keyup", maFonction1, false);
+			pays.addEventListener("change", maFonction1, false);
+			document.onload = function(e){
+			var dropdowns = document.getElementsByClassName("dropdown-trigger");
+			for (var i = 0; i < dropdowns.length; i++){
+				M.Dropdown.init(dropdowns[i]);
+			}
+			}
 		</script>
-		<script type="text/javascript" src="js/materialize.min.js"></script>
 </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('select').material_select();
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var dropdowns = document.querySelectorAll('.dropdown-trigger');
+        M.Dropdown.init(dropdowns);
+    });
+</script>
 
 </html>

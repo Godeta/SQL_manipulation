@@ -25,6 +25,4 @@
 		else
 		  return true;
 	}
-	
-	
-	
+

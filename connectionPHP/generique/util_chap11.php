@@ -78,10 +78,9 @@ function AfficherRequete($tab, $bool)
       echo "<td>" . $valeur . "</td>\n";
     }
     if($bool) {
-      echo "<td> <form><a href='../AffichagePHP/coureurSelect.php?id=$numCour'>";
+      echo "<td> <a href='../AffichagePHP/coureurSelect.php?id=$numCour'>";
   echo "<img src='../img/modify.png' alt='Une image symbolisant la modification' width='40' height ='40' > </a></td>";
-  echo "</button></form> </td>";
-  echo "<td> <form><a href='../AffichagePHP/choix_action_tdf_coureur.php?id=$numCour'>";
+  echo "<td> <a href='../AffichagePHP/choix_action_tdf_coureur.php?id=$numCour'>";
   echo "<img src='../img/remove.png' alt='Une croix rouge indiquant la suppression' width='40' height ='40' > </a></td>";
     }
     echo "</tr>\n";
