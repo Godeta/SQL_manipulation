@@ -14,7 +14,7 @@ $date = date('d/m/Y', time());
 if(isset($_POST['annee_naissance'])) {
         if($coureur->insert($_POST['nouvNom'], $_POST['nouvPrenom'],$_POST['annee_naissance'], $_POST['annee_prem'],$date) ==0 ) {
                 echo "<span class = \"feedbackPositif\"><br/> Insertion réussie !</span>";
-                                $nation->insertion($_POST['pays']);
+                                $nation->insertion($_POST['pays'],$_POST['annee_debut'],$_POST['annee_fin']);
                 }
 
         }

@@ -50,7 +50,9 @@ function AfficherTab($tab)
   echo "</PRE>";
 }
 //---------------------------------------------------------------------------------------------
-function AfficherRequete($tab, $bool)
+//prend en paramètre les données à afficher et une valeur qui va définir des actions selon la table par exemple
+// "c" dans valeur pour coureur fera en sorte de récupérer le numéro du coureur à supprimer ou modifier
+function AfficherRequete($tab, $code)
 {
   if(empty($tab))  {
     echo "Pas de résultats correspondants dans la base !";
@@ -65,7 +67,7 @@ function AfficherRequete($tab, $bool)
   {
     echo "<th>$key</th>\n";
   }
-  if($bool) {echo "<th> Modifier </th> <th> Supprimer </th>"; }
+  if(!empty($code) || $code!= false) {echo "<th> Modifier </th> <th> Supprimer </th>"; }
   echo "</tr>\n";
   echo "</thead>\n";
   echo "<tbody>\n";
@@ -74,14 +76,21 @@ function AfficherRequete($tab, $bool)
     echo "<tr>\n";
     foreach ($ligne as $valeur) {
       //on récupère le numéro du coureur
-      if($bool) {$numCour = $ligne["N_COUREUR"]; }
+      if($code=="c") {$numCour = $ligne["N_COUREUR"]; }
+      else if($code=="e") {$numE = $ligne["N_EQUIPE"]; }
       echo "<td>" . $valeur . "</td>\n";
     }
-    if($bool) {
+    if($code =="c" ) {
       echo "<td> <a href='../AffichagePHP/coureurSelect.php?id=$numCour'>";
-  echo "<img src='../img/modify.png' alt='Une image symbolisant la modification' width='40' height ='40' > </a></td>";
-  echo "<td> <a href='../AffichagePHP/choix_action_tdf_coureur.php?id=$numCour'>";
-  echo "<img src='../img/remove.png' alt='Une croix rouge indiquant la suppression' width='40' height ='40' > </a></td>";
+      echo "<img src='../img/modify.png' alt='Une image symbolisant la modification' width='40' height ='40' > </a></td>";
+      echo "<td> <a href='../AffichagePHP/choix_action_tdf_coureur.php?id=$numCour&table=coureur'>";
+      echo "<img src='../img/remove.png' alt='Une croix rouge indiquant la suppression' width='40' height ='40' > </a></td>";
+    }
+    else if ($code =="e") {
+      echo "<td> <a href='../AffichagePHP/inserer_tdf_equipe.php?id=$numE'>";
+      echo "<img src='../img/modify.png' alt='Une image symbolisant la modification' width='40' height ='40' > </a></td>";
+      echo "<td> <a href='../AffichagePHP/choix_action_tdf_coureur.php?id=$numE&table=equipe'>";
+      echo "<img src='../img/remove.png' alt='Une croix rouge indiquant la suppression' width='40' height ='40' > </a></td>";
     }
     echo "</tr>\n";
   }

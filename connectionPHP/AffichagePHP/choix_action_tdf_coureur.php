@@ -2,6 +2,7 @@
 session_start();
 
 include_once '../classesPHP/classe_coureur.php';
+include_once '../classesPHP/classe_equipe.php';
 include_once '../generique/util_chap9.php';
 include_once '../generique/fonc_oracle.php';
 include_once '../classesPHP/classe_nation.php';
@@ -20,17 +21,24 @@ include_once '../Affichage/choix_action_tdf_coureur.htm';
 // }
 
 //lorsque l'on clique sur le bouton supprimer renvoie sur la page
-if (!empty($_GET['id'])) {
-    $numC = $_GET['id'];
-
-$coureur = new Coureur();
-
-if($coureur->delete($numC, "","") ==0 ) {
+if (!empty($_GET['id']) &&!empty($_GET['table']) ) {
+    $id = $_GET['id'];
+    $table = $_GET['table'];
+if($table == "coureur") {
+    $coureur = new Coureur();
+if($coureur->delete($id, "","") ==0 ) {
     // redirige vers la même page sans garder la même valeur de get pour arrêter d'afficher le résultat de la suppression
     $location="../AffichagePHP/choix_action_tdf_coureur.php";
     echo '<META HTTP-EQUIV="refresh" CONTENT="0;URL='.$location.'">';
     echo "<br/> Suppression réussie !";
     exit;
+}
+}
+else if($table == "equipe") {
+    $equipe = new Equipe();
+    $location="../AffichagePHP/choix_action_tdf_coureur.php";
+    echo '<META HTTP-EQUIV="refresh" CONTENT="0;URL='.$location.'">';
+    echo "<script> alert(\"Suppression réussie !\");</script>";
 }
 
 }

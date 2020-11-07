@@ -4,7 +4,7 @@ include_once '../generique/util_chap11.php';
 include_once '../generique/regex.php';
 include_once '../generique/chaine.php';
 
-
+error_reporting(E_ERROR | E_PARSE);
 
 class Coureur
 {
@@ -333,5 +333,34 @@ else {
         $res = ExecuterRequeteOCI($cur);
         $nb = LireDonneesOCI1($cur, $donnees);
         return $donnees[0]['NB'];
+    }
+
+    //Fonction qui selectionne un/des coureur(s) dans la base de donnée et les affiche.
+    //Renvoie le tableau de données.
+    public function selectCoureurs()
+    {
+        $reqSelect = "SELECT  N_COUREUR, NOM, PRENOM FROM tdf_coureur";
+        $cur = PreparerRequeteOCI($this->_conn, $reqSelect);
+        $res = ExecuterRequeteOCI($cur);
+        $nb = LireDonneesOCI1($cur, $donnees);
+        return $donnees;
+    }
+
+    public function afficherSelectCoureurs($donnees)
+    {
+        echo "<option value=\"null\" selected>";
+        echo "</option>";
+        for($i=0; $i<count($donnees); $i++)
+        {
+            echo "<option value=\"".$donnees[$i]['N_COUREUR']."\">";
+            echo $donnees[$i]['NOM']." ".$donnees[$i]['PRENOM'];
+            echo "</option>";
+        }
+    }
+
+    public function ensembleSelectAffichage()
+    {
+        $donnees=$this->selectCoureurs();
+		$this->afficherSelectCoureurs($donnees);
     }
 }

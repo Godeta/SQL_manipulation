@@ -23,11 +23,12 @@
                     <ul id='dropdown1' class='dropdown-content'>
                         <li><a href="../AffichagePHP/inserer_tdf_coureur.php">Coureur</a></li>
                         <li><a href="../AffichagePHP/inserer_tdf_equipe.php">Equipe</a></li>
+                        <li><a href="../AffichagePHP/inserer_tdf_etape.php">Etape</a></li>
                         <li><a href="../AffichagePHP/inserer_tdf_sponsor.php">Sponsor</a></li>
+                        <li><a href="../AffichagePHP/inserer_tdf_parti_coureur.php">Participation coureur</a></li>
+                        <li><a href="../AffichagePHP/inserer_tdf_parti_equipe.php">Participation equipe</a></li>
                     </ul>
                 </li>
-                <li><a href="../AffichagePHP/modifier_tdf_coureur.php">Modifier un coureur</a></li>
-                <li><a href="../AffichagePHP/supprimer_tdf_coureur.php">Supprimer coureur</a></li>
                 <li><a href="../AffichagePHP/annee.php">Infos par année</a></li>
                 <li><a href="../AffichagePHP/infosGenerales.php">Infos générales</a></li>
             </ul>
@@ -57,14 +58,14 @@
         </fieldset>
         <div>
             <center>
-            <h2>Victoire(s) d'étape(s) au tour de France</h2>
+                <h2>Victoire(s) d'étape(s) au tour de France</h2>
             </center>
             <br>
 
             <?php
             $coureur->afficherPalmares($numC);
             ?>
-            
+
         </div>
         <form id="Formulaire_coureur" name="Formulaire_coureur" action="modifier_tdf_coureur.php" method="post"
             enctype="application/x-www-form-urlencoded">
@@ -72,6 +73,7 @@
             <fieldset>					
                 <legend>Modifier le coureur :</legend>
             <label for="changValN"> Nouvelle valeur : </label><input value="<?php verifierText("changValN"); ?>" type="text" id="changValN" name="changValN" placeholder="Titouan"><br />
+            <div class="row">
             <b>Champ à modifier : </b> 
             <select class="browser-default" name="valType" size="1">
                 <option value="NOM" <?php VerifierSelect("valType","NOM");?>> Nom</option>
@@ -79,6 +81,7 @@
                 <option value="ANNEE_PREM" <?php VerifierSelect("valType","ANNEE_PREM");?>> Annee de première participation</option>
                 <option value="ANNEE_NAISSANCE" <?php VerifierSelect("valType","ANNEE_NAISSANCE");?>> Année de naissance</option>
             </select>
+        </div>
         </fieldset>	
         <button class="waves-effect waves-light btn" type="submit" name="BtSubModif" value="Effectuer la modification" onclick="return testerValidModif()">Effectuer la modification<i class="material-icons right">send</i></button>
     </form>

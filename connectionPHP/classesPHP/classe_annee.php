@@ -74,7 +74,7 @@ class Annee
     {
         echo "<h1>Participants</h1>";
         echo "</br>";
-        $req = "select n_dossard as \"N°DOSSARD\",tdf_coureur.nom as nom,prenom,code_cio as nationalite,tdf_sponsor.nom as \"NOM D EQUIPE \" from tdf_parti_coureur join tdf_sponsor using (n_equipe,n_sponsor) join tdf_coureur using (n_coureur) where annee=" . $annee . " order by n_dossard";
+        $req = "select n_dossard as \"N°DOSSARD\",tdf_coureur.nom as nom,prenom,code_cio as nationalite,tdf_sponsor.nom as \"NOM D'EQUIPE \" from tdf_parti_coureur join tdf_sponsor using (n_equipe,n_sponsor) join tdf_coureur using (n_coureur) where annee=" . $annee . " order by n_dossard";
         $cur = PreparerRequeteOCI($this->_conn, $req);
         $res = ExecuterRequeteOCI($cur);
         $nb = LireDonneesOCI1($cur, $donnees);
@@ -85,7 +85,7 @@ class Annee
     {
         echo "<h1>Abandons</h1>";
         echo "</br>";
-        $req = "select n_dossard as \"N°DOSSARD\",tdf_coureur.nom as nom,prenom,code_cio as nationalite,tdf_sponsor.nom as \"NOM D EQUIPE\",n_etape as etape,libelle as raison from tdf_abandon join tdf_coureur using (n_coureur) join tdf_parti_coureur using (n_coureur, annee) join tdf_sponsor using (n_equipe,n_sponsor) join tdf_typeaban using (c_typeaban) join tdf_etape using (annee,n_etape) where annee=" . $annee . "order by n_etape";
+        $req = "select n_dossard as \"N°DOSSARD\",tdf_coureur.nom as nom,prenom,code_cio as nationalite,tdf_sponsor.nom as \"NOM D'EQUIPE\",n_etape as etape,libelle as raison from tdf_abandon join tdf_coureur using (n_coureur) join tdf_parti_coureur using (n_coureur, annee) join tdf_sponsor using (n_equipe,n_sponsor) join tdf_typeaban using (c_typeaban) join tdf_etape using (annee,n_etape) where annee=" . $annee . "order by n_etape";
         $cur = PreparerRequeteOCI($this->_conn, $req);
         $res = ExecuterRequeteOCI($cur);
         $nb = LireDonneesOCI1($cur, $donnees);
