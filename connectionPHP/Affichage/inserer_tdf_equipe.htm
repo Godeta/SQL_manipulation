@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="../Affichage/materialize.css">
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <title>Formulaire de mise à jour de base de données</title>
+    <title>Insérer équipe</title>
     </script>
 </head>
 
@@ -16,12 +16,14 @@
         <div class="nav-wrapper">
             <a href="../Affichage/page_accueil.htm"><img id="deco" class="responsive-img" src="../img/deco.png" alt=""></a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="../Affichage/guide.html">Guide</a></li>
                 <li><a href="../AffichagePHP/choix_action_tdf_coureur.php">Recherche</a></li>
                 <li><a class='dropdown-trigger btn' href='#' data-target='dropdown1'>Insertion</a>
                     <ul id='dropdown1' class='dropdown-content'>
                         <li><a href="../AffichagePHP/inserer_tdf_coureur.php">Coureur</a></li>
-                        <li><a href="../AffichagePHP/inserer_tdf_sponsor.php">Sponsor</a></li>
+                        <li><a href="../AffichagePHP/inserer_tdf_equipe.php">Equipe</a></li>
                         <li><a href="../AffichagePHP/inserer_tdf_etape.php">Etape</a></li>
+                        <li><a href="../AffichagePHP/inserer_tdf_sponsor.php">Sponsor</a></li>
                         <li><a href="../AffichagePHP/inserer_tdf_parti_coureur.php">Participation coureur</a></li>
                         <li><a href="../AffichagePHP/inserer_tdf_parti_equipe.php">Participation equipe</a></li>
                     </ul>
@@ -41,12 +43,11 @@
     <form id="Formulaire_equipe" name="Formulaire_equipe" action="../AffichagePHP/inserer_tdf_equipe.php" method="post" enctype="application/x-www-form-urlencoded">
         <fieldset>
             <div class="col s6">
-                <label for="annee_naissance">Année de création : </label><input value="<?php verifierText(" annee_creation "); ?>" type="number" min="1900" max="2002" id="annee_naissance" name="annee_naissance" size="20" maxlength="60" placeholder="YYYY"
-                    pattern="^[0-9]{4}$"><br />
+                <label for="annee_crea">Année de création : </label><input value="<?php verifierText(" annee_crea "); ?>" type="number" id="annee_crea" name="annee_crea" size="20" maxlength="60" placeholder="YYYY" pattern="^[0-9]{4}$"><br />
             </div>
             <!--pattern pour une date : DD/MM/YYYY ^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$ -->
             <div class="col s6">
-                <label for="annee_prem">Année de disparition : </label><input value="<?php verifierText(" annee_disparition "); ?>" type="number" min="1900" max="2002" id="annee_prem" name="annee_prem" size="20" placeholder="YYYY" pattern="^[0-9]{4}$">                <br />
+                <label for="annee_dispa">Année de disparition : </label><input value="<?php verifierText(" annee_dispa "); ?>" type="number" id="annee_dispa" name="annee_dispa" size="20" placeholder="YYYY" pattern="^[0-9]{4}$"> <br />
             </div>
             </div>
         </fieldset>

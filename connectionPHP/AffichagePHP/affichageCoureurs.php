@@ -71,6 +71,36 @@ else if ($table == "equipe") {
     where n_equipe like '%$numE%' and ANNEE_CREATION like '%$annee_crea_eq%' and ANNEE_DISPARITION like '%$annee_disp_eq%'
     and nom like '%$nomE%'";
 }
+//action pour la table étapes
+else if ($table =="etape") {
+    $code = "et";
+    $n_etape =$_GET["n_etape"];
+    $nomEt = $_GET["nomEt"];
+    if(!empty($nomEt)) {
+        $nomEt = $coureur->changeValSelonType("NOM",$nomEt);
+        }
+    $pays= $_GET["pays"];
+    $annee = $_GET["annee"];
+    $dist = $_GET["dist"];
+    $cat = $_GET["cat"];
+    if(!empty($cat)) {
+        $cat = $coureur->changeValSelonType("NOM",$cat);
+        }
+    $req = "SELECT N_ETAPE, ANNEE, DISTANCE, VILLE_D, CAT_CODE, NOM as \"Pays\"
+    from tdf_etape join tdf_nation on tdf_etape.code_cio_d = tdf_nation.code_cio 
+    join tdf_app_nation using (code_cio) 
+    where N_ETAPE like '%$n_etape' and VILLE_D like '%$nomEt' and CAT_CODE like '%$cat'
+     and CODE_CIO_A like '%$pays' and ANNEE like '%$annee' and DISTANCE like '%$dist'";
+}
+//action pour la table sponsor
+else if ($table == "sponsor") {
+    $code = "s";
+    $numE2 = $_GET["numE2"];
+    $numS = $_GET["numS"];
+    $anneeS = $_GET["anneeS"];
+    $req = "SELECT N_EQUIPE,N_SPONSOR, NOM ,ANNEE_SPONSOR
+from tdf_sponsor where n_equipe like '%$numE2%' and N_SPONSOR like'%$numS%' and annee_sponsor like '%$anneeS%'";
+}
 //  echo $req;
 $cur = PreparerRequeteOCI($conn,$req);
 $res = ExecuterRequeteOCI($cur);

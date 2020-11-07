@@ -150,4 +150,19 @@ class Equipe
         
     }
 
+    public function insertParti($annee,$n_equipe,$n_sponsor,$dir,$codir,$date)
+    {
+        $reqInsert = "INSERT INTO tdf_parti_equipe(annee,n_equipe,n_sponsor,n_pre_directeur,n_co_directeur,date_insert) VALUES(:rannee,:rid,:ridspo,:rpre,:rco,:rdate)";
+            $cur = PreparerRequeteOCI($this->_conn, $reqInsert);
+            ajouterParamOCI($cur, ":rannee", $annee, 32);
+            ajouterParamOCI($cur, ":rid", $n_equipe, 32);
+            ajouterParamOCI($cur, ":ridspo", $n_sponsor, 32);
+            ajouterParamOCI($cur, ":rpre", $dir, 32);
+            ajouterParamOCI($cur, ":rco", $codir, 32);
+            ajouterParamOCI($cur, ":rdate", $date, 32);
+            $res = ExecuterRequeteOCI($cur);
+            $comitted = ValiderTransacOCI($this->_conn);
+            return 0;
+    }
+    
 }

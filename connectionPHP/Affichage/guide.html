@@ -7,14 +7,17 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="../Affichage/materialize.css">
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <title>Informations générales</title>
+    <title>Guide</title>
+
 </head>
+
 
 <body>
     <nav class="grey darken-2">
         <div class="nav-wrapper">
             <a href="../Affichage/page_accueil.htm"><img id="deco" class="responsive-img" src="../img/deco.png"
                     alt=""></a>
+
             <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <li><a href="../Affichage/guide.html">Guide</a></li>
                 <li><a href="../AffichagePHP/choix_action_tdf_coureur.php">Recherche</a></li>
@@ -34,31 +37,19 @@
         </div>
     </nav>
 
-    <div>
-       <?php 
-       $infos->totalCoureurs();
-       $infos->etapeLongue();
-       $infos->etapeCourte();
-       $infos->plusDeVictoires(); 
-       $infos->etapeDepart();
-       $infos->etapeArrivee();
-       $infos->villeEtapes();
-       $infos->paysPresents();
-       $infos->nationRepresentees();
-       $infos->equipes();
-       ?>
-    </div>
-
+    <p class="flow-text"><h1>Bienvenu dans ce guide !</h1> 
+        <h5>Sur ce site vous pouvez :</h5><ul> <h5>
+         <li>- <b>Effectuer des recherches</b> sur les coureurs, equipes, étapes ou sponsors du tour de France 
+    (dans Recherche vous pouvez <b>choisir la table</b> dans laquelle rechercher, entrer des valeurs dans les critères de recherche
+    et dans le cas de coureur vous pouvez cliquer sur <b>modifier</b> pour avoir des informations supplémentaires sur le coureur ou modifier certaines données
+    en sélectionnant le type de données à modifier puis en entrant la valeur)  </li><br/> 
+	   <li>  - <b>Ajouter des informations</b> à la base (choix de la table dans le menu déroulant de "Insertion") </li><br/> 
+        <li> - <b>Supprimer des données</b> (dans la recherche dans une colonne de droite il y a un bouton supprimer, attention 
+    cependant il peut y avoir des conditions par exemple on ne peut pas supprimer un coureur qui a participé au tour de France)</li><br/>  
+        <li> - <b>Consulter des informations génerales</b> (différentes statistiques et informations sur le tour en géneral, vous pouvez aussi trouver des informations
+    sur un coureur particulier comme la liste des équipes auquelles il a appartenu en recherchant le coureur et cliquant sur 
+    l'icône pour le modifier)  </li><br/>
+       <li>  - <b>Consulter des informations par années</b> vous pouvez choisir une année et des informations du tour de France à afficher sur celle ci  </li>
+        </h5> </ul> </p>
 </body>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-<script>
-    $(document).ready(function () {
-        $('select').material_select();
-    });
-</script>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var dropdowns = document.querySelectorAll('.dropdown-trigger');
-        M.Dropdown.init(dropdowns);
-    });
-</script>
+</html>

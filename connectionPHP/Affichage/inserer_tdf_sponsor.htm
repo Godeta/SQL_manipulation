@@ -7,8 +7,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="../Affichage/materialize.css">
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <title>Formulaire de mise à jour de base de données</title>
-    <script src="../Affichage/formulaire_coureur.js"></script>
+    <title>Insérer sponsor</title>
 </head>
 
 <body>
@@ -16,12 +15,14 @@
         <div class="nav-wrapper">
             <a href="../Affichage/page_accueil.htm"><img id="deco" class="responsive-img" src="../img/deco.png" alt=""></a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="../Affichage/guide.html">Guide</a></li>
                 <li><a href="../AffichagePHP/choix_action_tdf_coureur.php">Recherche</a></li>
                 <li><a class='dropdown-trigger btn' href='#' data-target='dropdown1'>Insertion</a>
                     <ul id='dropdown1' class='dropdown-content'>
                         <li><a href="../AffichagePHP/inserer_tdf_coureur.php">Coureur</a></li>
                         <li><a href="../AffichagePHP/inserer_tdf_equipe.php">Equipe</a></li>
                         <li><a href="../AffichagePHP/inserer_tdf_etape.php">Etape</a></li>
+                        <li><a href="../AffichagePHP/inserer_tdf_sponsor.php">Sponsor</a></li>
                         <li><a href="../AffichagePHP/inserer_tdf_parti_coureur.php">Participation coureur</a></li>
                         <li><a href="../AffichagePHP/inserer_tdf_parti_equipe.php">Participation equipe</a></li>
                     </ul>
@@ -33,51 +34,60 @@
     </nav>
 
     <center>
-        <h3>Ajouter un coureur</h3>
+        <h3>Ajouter un sponsor</h3>
     </center>
-
-    <!-- <span class="feedback" id="feedback" ><?php echo("Résultat : $feedback") ?> </span> -->
 
     <form id="Formulaire_sponsor" name="Formulaire_sponsor" action="../AffichagePHP/inserer_tdf_sponsor.php" method="post" enctype="application/x-www-form-urlencoded">
         <fieldset>
-            <legend>Insérez un nouveau coureur :</legend>
+            <legend>Ajouter un sponsor à une équipe existante</legend>
             <div class="row">
                 <div class="col s6">
-                    <label for="nouvNom">nom : </label><input value="<?php verifierText(" nouvNom "); ?>" type="text" id="nouvNom" name="nouvNom" size="20" maxlength="60" placeholder="nom du coureur"> </br>
-                </div>
-                <div class="col s6">
-                    <label for="nouvPrenom">prénom : </label><input value="<?php verifierText(" nouvPrenom "); ?>" type="text" id="nouvPrenom" name="nouvPrenom" placeholder="prénom du coureur" size="20" maxlength="30"><br />
+                    <label for="nEquipe">N° de l'équipe qui reçoit un sponsor : </label><input value="<?php verifierText(" nEquipe "); ?>" type="text" id="nEquipe" name="nEquipe" size="20" maxlength="60" placeholder="n° de l'équipe dans la base"> </br>
                 </div>
             </div>
-            <div class="row">
-                <div class="col s6">
-                    <label for="annee_naissance">Année de naissance : </label><input value="<?php verifierText(" annee_naissance "); ?>" type="number" min="1900" max="2002" id="annee_naissance" name="annee_naissance" size="20" maxlength="60" placeholder="YYYY"
-                        pattern="^[0-9]{4}$"><br />
+            <fieldset>
+                <legend>Préciser les caractéristiques du sponsor</legend>
+                <div class="row">
+                    <div class="col s6">
+                        <label for="nomSponsor">Nom du sponsor : </label><input value="<?php verifierText(" nomSponsor "); ?>" type="text" id="nomSponsor" name="nomSponsor" size="20" maxlength="60" placeholder="nom du sponsor"> </br>
+                    </div>
+                    <div class="col s6">
+                        <label for="NomAbr">Nom abrégé du sponsor : </label><input value="<?php verifierText(" NomAbr "); ?>" type="text" id="NomAbr" name="NomAbr" placeholder="Nom du sponsor en 3 lettres ex : FRA" size="20" maxlength="3"><br />
+                    </div>
                 </div>
-                <!--pattern pour une date : DD/MM/YYYY ^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$ -->
-                <div class="col s6">
-                    <label for="annee_prem">Année de première participation : </label><input value="<?php verifierText(" annee_prem "); ?>" type="number" min="1900" max="2002" id="annee_prem" name="annee_prem" size="20" placeholder="YYYY" pattern="^[0-9]{4}$">                    <br />
+                <div class="row">
+                    <div class="col s12">
+                        <label for="annee_sponsor">Année de début du sponsoring : </label><input value="<?php verifierText(" annee_sponsor "); ?>" type="number" min="1900" id="annee_sponsor" name="annee_sponsor" size="20" maxlength="60" placeholder="YYYY"
+                            pattern="^[0-9]{4}$"><br />
+                    </div>
                 </div>
-            </div>
-            <label>Nationalité</label>
+                <label>Nationalité</label>
 
 
-            <div class="row">
-                <div class="col s4">
-                    <select class="browser-default" name="pays">
-						<?php 
+                <div class="row">
+                    <div class="col s4">
+                        <select class="browser-default" name="pays">
+                            <?php 
 						$donnees=$nation->nationalite();
-						$nation->remplirNation($donnees);
+						$nation->remplirNation($donnees,"pays");
 				?>
-					</select>
+                        </select>
+                    </div>
                 </div>
-            </div>
+            </fieldset>
         </fieldset>
-        <button class="waves-effect waves-light btn" type="submit" onsubmit="return FormValidation();" onchange="return FormValidation();" name="BtSubAjouter" value="Effectuer l'insertion">Effectuer l'insertion<i class="material-icons right">send</i></button>
+        <button class="waves-effect waves-light btn" type="submit" name="BtSubAjouter" value="Effectuer l'insertion">Effectuer
+            l'insertion<i class="material-icons right">send</i></button>
         <br />
     </form>
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('select').material_select();
+    });
+</script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {

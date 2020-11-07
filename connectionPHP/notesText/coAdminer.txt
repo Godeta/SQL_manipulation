@@ -1,3 +1,0 @@
-host : kiutoracle18.unicaen.fr:1521/info.kiutoracle18.unicaen.fr
-user : pphp2a_08
-mdp : EygQpI7Wie8K1CAq

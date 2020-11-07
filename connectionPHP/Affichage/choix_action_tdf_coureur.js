@@ -27,6 +27,34 @@ function chargerDonneeEquipe(numE, nomE, annee_crea_eq, annee_disp_eq) {
     xhr.addEventListener("readystatechange", Lire, false);
     xhr.send(null);
 }
+//table etapes
+function chargerDonneeEtape(n_etape, nomEt,  pays, annee, dist, cat) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', '../AffichagePHP/affichageCoureurs.php/?n_etape=' +
+        n_etape + '&nomEt=' + nomEt + '&pays=' +pays + '&annee=' + annee + '&dist=' + dist +  '&cat=' + cat +  '&table=etape');
+
+    var Lire = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            document.getElementById('resultat').innerHTML = '<span>' + xhr.responseText + '</span>';
+        }
+    }
+    xhr.addEventListener("readystatechange", Lire, false);
+    xhr.send(null);
+}
+//table sponsors
+function chargerDonneeSponsor(numS, numE2, anneeS) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', '../AffichagePHP/affichageCoureurs.php/?numS=' +
+        numS + '&numE2=' + numE2 + '&anneeS=' +anneeS + '&table=sponsor');
+
+    var Lire = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            document.getElementById('resultat').innerHTML = '<span>' + xhr.responseText + '</span>';
+        }
+    }
+    xhr.addEventListener("readystatechange", Lire, false);
+    xhr.send(null);
+}
 
 //le choix de la table
 var table = document.getElementById('table');
@@ -39,11 +67,24 @@ var annee_pre = document.getElementById('ANNEE_PREM');
 var numC = document.getElementById('NUMERO');
 var pays = document.getElementById('pays');
 
+// élements de étape
+var n_etape = document.getElementById('n_etape');
+var nomEt = document.getElementById('nom_etape');
+var pays2 = document.getElementById('pays2');
+var annee_eta = document.getElementById('annee_etape');
+var distance = document.getElementById('dist_etape');
+var cat = document.getElementById('catET');
+
 //élements de équipe
 var numE = document.getElementById('n_equipe');
 var nomE = document.getElementById('nom_equipe');
 var annee_crea_eq = document.getElementById('annee_crea_eq');
 var annee_disp_eq = document.getElementById('annee_disp_eq');
+
+//élements de sponsor
+var numE2 = document.getElementById('n_equipe2');
+var numS = document.getElementById('n_sponsor');
+var anneeS = document.getElementById('annee_sponsor');
 
 
 var maFonction1 = function () {
@@ -52,12 +93,19 @@ var maFonction1 = function () {
 var chargeEquipe = function () {
     chargerDonneeEquipe(numE.value,nomE.value,annee_crea_eq.value,annee_disp_eq.value);
 };
+var chargeEtape = function () {
+    chargerDonneeEtape(n_etape.value, nomEt.value,  pays2.value, annee_eta.value, distance.value, cat.value);
+};
+var chargeSponsor = function () {
+    chargerDonneeSponsor(numS.value,numE2.value,anneeS.value);
+};
 
 //affichage des formulaires
 function displayHS() {
     document.getElementById('Formulaire_coureur').style.display = 'none'; //cache l'élement
     document.getElementById('Formulaire_equipe').style.display = 'none'; 
     document.getElementById('Formulaire_etape').style.display = 'none'; 
+    document.getElementById('Formulaire_sponsor').style.display = 'none'; 
     document.getElementById('coureurIMG').style.display = 'none'; 
     document.getElementById('etapeIMG').style.display = 'none'; 
     document.getElementById('equipeIMG').style.display = 'none'; 
@@ -76,6 +124,7 @@ function displayHS() {
     }
     else if (table.value == "Sponsor") {
         document.getElementById('sponsorIMG').style.display = 'block'; 
+        document.getElementById('Formulaire_sponsor').style.display = 'block'; 
     }
 }
 
@@ -94,4 +143,16 @@ numE.addEventListener("keyup", chargeEquipe, false);
 nomE.addEventListener("keyup", chargeEquipe, false);
 annee_crea_eq.addEventListener("keyup", chargeEquipe, false);
 annee_disp_eq.addEventListener("keyup", chargeEquipe, false);
+// formulaire etapes
+n_etape.addEventListener("keyup", chargeEtape, false);
+nomEt.addEventListener("keyup", chargeEtape, false);
+pays2.addEventListener("change", chargeEtape, false);
+annee_eta.addEventListener("keyup", chargeEtape, false);
+distance.addEventListener("keyup", chargeEtape, false);
+cat.addEventListener("keyup", chargeEtape, false);
+// formulaire sponsor
+numE2.addEventListener("keyup", chargeSponsor, false);
+numS.addEventListener("keyup", chargeSponsor, false);
+anneeS.addEventListener("keyup", chargeSponsor, false);
+//affichage
 displayHS();

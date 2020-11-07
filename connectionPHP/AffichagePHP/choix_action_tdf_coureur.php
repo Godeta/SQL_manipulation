@@ -8,6 +8,9 @@ include_once '../generique/fonc_oracle.php';
 include_once '../classesPHP/classe_nation.php';
 $nation = new Nation();
 include_once '../Affichage/choix_action_tdf_coureur.htm';
+// pour éviter qu'un utilisateur ne puisse voir des erreurs php
+error_reporting(0);
+ini_set('display_errors', 0);
 // $conn = OuvrirConnexionOCI($_SESSION['ident'],$_SESSION['mdp'], $_SESSION['site']);
 
 // $coureur = new Coureur();
@@ -36,9 +39,19 @@ if($coureur->delete($id, "","") ==0 ) {
 }
 else if($table == "equipe") {
     $equipe = new Equipe();
+    if($equipe->delete($id, "","") ==0 ) {
     $location="../AffichagePHP/choix_action_tdf_coureur.php";
     echo '<META HTTP-EQUIV="refresh" CONTENT="0;URL='.$location.'">';
-    echo "<script> alert(\"Suppression réussie !\");</script>";
+    echo "<br/> Suppression réussie !";
+    }
+}
+else if($table == "sponsor") {
+    $sponsor = new Sponsor();
+    if($sponsor->delete($id, "","") ==0 ) {
+    $location="../AffichagePHP/choix_action_tdf_coureur.php";
+    echo '<META HTTP-EQUIV="refresh" CONTENT="0;URL='.$location.'">';
+    echo "<br/> Suppression réussie !";
+    }
 }
 
 }

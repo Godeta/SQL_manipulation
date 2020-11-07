@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="../Affichage/materialize.css">
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <title>Formulaire de mise à jour de base de données</title>
+    <title>Parti Coureur</title>
     <script src="../Affichage/formulaire_coureur.js"></script>
 </head>
 
@@ -16,14 +16,16 @@
         <div class="nav-wrapper">
             <a href="../Affichage/page_accueil.htm"><img id="deco" class="responsive-img" src="../img/deco.png" alt=""></a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="../Affichage/guide.html">Guide</a></li>
                 <li><a href="../AffichagePHP/choix_action_tdf_coureur.php">Recherche</a></li>
                 <li><a class='dropdown-trigger btn' href='#' data-target='dropdown1'>Insertion</a>
                     <ul id='dropdown1' class='dropdown-content'>
                         <li><a href="../AffichagePHP/inserer_tdf_coureur.php">Coureur</a></li>
                         <li><a href="../AffichagePHP/inserer_tdf_equipe.php">Equipe</a></li>
-                        <li><a href="../AffichagePHP/inserer_tdf_sponsor.php">Sponsor</a></li>
                         <li><a href="../AffichagePHP/inserer_tdf_etape.php">Etape</a></li>
+                        <li><a href="../AffichagePHP/inserer_tdf_sponsor.php">Sponsor</a></li>
                         <li><a href="../AffichagePHP/inserer_tdf_parti_coureur.php">Participation coureur</a></li>
+                        <li><a href="../AffichagePHP/inserer_tdf_parti_equipe.php">Participation equipe</a></li>
                     </ul>
                 </li>
                 <li><a href="../AffichagePHP/annee.php">Infos par année</a></li>
@@ -33,51 +35,64 @@
     </nav>
 
     <center>
-        <h3>Ajouter un coureur</h3>
+        <h3>Ajouter une participation à un coureur</h3>
     </center>
 
     <!-- <span class="feedback" id="feedback" ><?php echo("Résultat : $feedback") ?> </span> -->
 
     <form id="Formulaire_parti_coureur" name="Formulaire_parti_coureur" action="../AffichagePHP/inserer_tdf_parti_coureur.php" method="post" enctype="application/x-www-form-urlencoded">
         <fieldset>
-            <legend>Insérez un nouveau coureur :</legend>
+            <legend>Insérez une nouvelle participation :</legend>
+            <label>Séléction coureur</label>
             <div class="row">
                 <div class="col s6">
-                    <label for="nouvNom">nom : </label><input value="<?php verifierText(" nouvNom "); ?>" type="text" id="nouvNom" name="nouvNom" size="20" maxlength="60" placeholder="nom du coureur"> </br>
+                    <label for="n_Coureur">N° du coureur : </label><input value="<?php verifierText(" n_Coureur "); ?>" type="text" id="n_Coureur" name="n_Coureur" size="5" maxlength="10" placeholder="Numéro du coureur dans la base"> </br>
                 </div>
-                <div class="col s6">
-                    <label for="nouvPrenom">prénom : </label><input value="<?php verifierText(" nouvPrenom "); ?>" type="text" id="nouvPrenom" name="nouvPrenom" placeholder="prénom du coureur" size="20" maxlength="30"><br />
+                <div class="col s3">
+                    <label>
+                        <input type="checkbox" class="filled-in" name="valide" value="0"/>
+                        <span>Participation Valide</span>
+                    </label>
+                </div>
+                <div class="col s3">
+                    <label>
+                        <input type="checkbox" class="filled-in" name="jeune" value="o" />
+                        <span>Jeune</span>
+                    </label>
                 </div>
             </div>
             <div class="row">
                 <div class="col s6">
-                    <label for="annee_naissance">Année de naissance : </label><input value="<?php verifierText(" annee_naissance "); ?>" type="number" min="1900" max="2002" id="annee_naissance" name="annee_naissance" size="20" maxlength="60" placeholder="YYYY"
-                        pattern="^[0-9]{4}$"><br />
+                    <!--pattern pour une date : DD/MM/YYYY ^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$ -->
+                    <label for="annee">Année de participation : </label>
+                    <input value="<?php verifierText(" annee "); ?>" type="number" min="1903" max="2020" id="annee" name="annee" size="20" maxlength="60" placeholder="YYYY" pattern="^[0-9]{4}$"><br/>
                 </div>
-                <!--pattern pour une date : DD/MM/YYYY ^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$ -->
                 <div class="col s6">
-                    <label for="annee_prem">Année de première participation : </label><input value="<?php verifierText(" annee_prem "); ?>" type="number" min="1900" max="2002" id="annee_prem" name="annee_prem" size="20" placeholder="YYYY" pattern="^[0-9]{4}$">                    <br />
+                    <label for="numDossard">Dossard du coureur : </label><input value="<?php verifierText(" numDossard "); ?>" type="text" id="numDossard" name="numDossard" size="5" maxlength="10" placeholder="Numéro du dossard"> </br>
                 </div>
             </div>
-            <label>Nationalité</label>
 
-
+            </div>
             <div class="row">
-                <div class="col s4">
-                    <select class="browser-default" name="pays">
-						<?php 
-						$donnees=$nation->nationalite();
-						$nation->remplirNation($donnees);
-				?>
-					</select>
+                <div class="col s6">
+                    <label for="numEquipe">Numéro de l'équipe : </label><input value="<?php verifierText(" numEquipe "); ?>" type="text" id="numEquipe" name="numEquipe" size="15" maxlength="10" placeholder="Numéro de l'équipe"> </br>
+                </div>
+                <div class="col s6">
+                    <label for="numSponsor">Numéro du sponsor : </label><input value="<?php verifierText(" numSponsor "); ?>" type="text" id="numEquipe" name="numSponsor" size="15" maxlength="10" placeholder="Numéro du sponsor"> </br>
                 </div>
             </div>
         </fieldset>
-        <button class="waves-effect waves-light btn" type="submit" onsubmit="return FormValidation();" onchange="return FormValidation();" name="BtSubAjouter" value="Effectuer l'insertion">Effectuer l'insertion<i class="material-icons right">send</i></button>
+        <button class="waves-effect waves-light btn" type="submit" name="BtSubAjouter" value="Effectuer l'insertion">Effectuer l'insertion<i class="material-icons right">send</i></button>
         <br />
     </form>
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('select').material_select();
+    });
+</script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {

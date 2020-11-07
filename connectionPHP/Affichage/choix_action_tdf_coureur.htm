@@ -16,6 +16,8 @@
         <div class="nav-wrapper">
             <a href="../Affichage/page_accueil.htm"><img id="deco" class="responsive-img" src="../img/deco.png" alt=""></a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
+				<li><a href="../Affichage/guide.html">Guide</a></li>
+				<li><a href="../AffichagePHP/choix_action_tdf_coureur.php">Recherche</a></li>
                 <li><a class='dropdown-trigger btn' href='#' data-target='dropdown1'>Insertion</a>
                     <ul id='dropdown1' class='dropdown-content'>
                         <li><a href="../AffichagePHP/inserer_tdf_coureur.php">Coureur</a></li>
@@ -24,12 +26,10 @@
                         <li><a href="../AffichagePHP/inserer_tdf_sponsor.php">Sponsor</a></li>
                         <li><a href="../AffichagePHP/inserer_tdf_parti_coureur.php">Participation coureur</a></li>
                         <li><a href="../AffichagePHP/inserer_tdf_parti_equipe.php">Participation equipe</a></li>
-
                     </ul>
                 </li>
-                <li><a href="../AffichagePHP/annee.php">Infos par année</a></li>
+				<li><a href="../AffichagePHP/annee.php">Infos par année</a></li>
                 <li><a href="../AffichagePHP/infosGenerales.php">Infos générales</a></li>
-                <!-- Modifier -->
             </ul>
         </div>
     </nav>
@@ -38,10 +38,10 @@
         <div class="col s6">
             <label for="choixTable"> Choix de la table : </label>
             <select class="browser-default" name="choixTable" id="table" size="1">
-		<option <?php VerifierSelect("valType","Coureur");?> value="Coureur"> Coureur</option>
-		<option <?php VerifierSelect("valType","Equipe");?> value="Equipe"> Equipe</option>
-		<option <?php VerifierSelect("valType","Etape");?> value="Etape"> Etape</option>
-		<option <?php VerifierSelect("valType","Sponsor");?> value="Sponsor"> Sponsor</option>
+		<option <?php VerifierSelect("choixTable","Coureur");?> value="Coureur"> Coureur</option>
+		<option <?php VerifierSelect("choixTable","Equipe");?> value="Equipe"> Equipe</option>
+		<option <?php VerifierSelect("choixTable","Etape");?> value="Etape"> Etape</option>
+		<option <?php VerifierSelect("choixTable","Sponsor");?> value="Sponsor"> Sponsor</option>
 	</select>
         </div>
         <div class="col s6">
@@ -55,16 +55,16 @@
     <form id="Formulaire_coureur" name="Formulaire_coureur" action="../AffichagePHP/choix_action_tdf_coureur.php" method="post" enctype="application/x-www-form-urlencoded">
         <div class="row">
             <div class="col s2">
-                <label for="NOM"> Nom : </label><input value="<?php verifierText("NOM"); ?>" type="text" id="NOM" name="NOM" placeholder="Titouan"><br />
+                <label for="NOM"> Nom : </label><input value="<?php verifierText("NOM"); ?>" type="text" id="NOM" name="NOM" placeholder="PAUL"><br />
             </div>
             <div class="col s2">
                 <label for="PRENOM"> Prenom : </label><input value="<?php verifierText("PRENOM"); ?>" type="text" id="PRENOM" name="PRENOM" placeholder="Titouan"><br />
             </div>
             <div class="col s2">
-                <label for="ANNEE_PREM"> Annee de première participation : </label><input value="<?php verifierText("ANNEE_PREM"); ?>" type="number" id="ANNEE_PREM" name="ANNEE_PREM" placeholder="Titouan"><br />
+                <label for="ANNEE_PREM"> Annee de première participation : </label><input value="<?php verifierText("ANNEE_PREM"); ?>" type="number" id="ANNEE_PREM" name="ANNEE_PREM" placeholder="1998"><br />
             </div>
             <div class="col s2">
-                <label for="ANNEE_NAISSANCE"> Année de naissance : </label><input value="<?php verifierText("ANNEE_NAISSANCE"); ?>" type="number" id="ANNEE_NAISSANCE" name="ANNEE_NAISSANCE" placeholder="Titouan"><br />
+                <label for="ANNEE_NAISSANCE"> Année de naissance : </label><input value="<?php verifierText("ANNEE_NAISSANCE"); ?>" type="number" id="ANNEE_NAISSANCE" name="ANNEE_NAISSANCE" placeholder="1972"><br />
             </div>
             <div class="col s2">
                 <label for="NUMERO"> Numéro de coureur : </label><input value="<?php verifierText("NUMERO"); ?>" type="number" id="NUMERO" name="NUMERO" placeholder="2050"><br />
@@ -85,16 +85,16 @@
     <form id="Formulaire_equipe" name="Formulaire_equipe" action="../AffichagePHP/choix_action_tdf_coureur.php" method="post" enctype="application/x-www-form-urlencoded">
         <div class="row">
             <div class="col s3">
-                <label for="n_equipe"> Numéro de l'équipe : </label><input value="<?php verifierText("n_equipe"); ?>" type="text" id="n_equipe" name="n_equipe" placeholder="Equipe TropFort"><br />
+                <label for="n_equipe"> Numéro de l'équipe : </label><input value="<?php verifierText("n_equipe"); ?>" type="text" id="n_equipe" name="n_equipe" placeholder="15"><br />
             </div>
             <div class="col s3">
                 <label for="nom_equipe"> Nom de l'équipe : </label><input value="<?php verifierText("nom_equipe"); ?>" type="text" id="nom_equipe" name="nom_equipe" placeholder="Equipe TropFort"><br />
             </div>
             <div class="col s3">
-                <label for="annee_crea_eq"> Annee de création de l'équipe : </label><input value="<?php verifierText("annee_crea_eq"); ?>" type="number" id="annee_crea_eq" name="annee_crea_eq" placeholder="Equipe TropFort"><br />
+                <label for="annee_crea_eq"> Annee de création de l'équipe : </label><input value="<?php verifierText("annee_crea_eq"); ?>" type="number" id="annee_crea_eq" name="annee_crea_eq" placeholder="2000"><br />
             </div>
             <div class="col s3">
-                <label for="annee_disp_eq"> Année de disparition de l'équipe : </label><input value="<?php verifierText("annee_disp_eq"); ?>" type="number" id="annee_disp_eq" name="annee_disp_eq" placeholder="Equipe TropFort"><br />
+                <label for="annee_disp_eq"> Année de disparition de l'équipe : </label><input value="<?php verifierText("annee_disp_eq"); ?>" type="number" id="annee_disp_eq" name="annee_disp_eq" placeholder="2010"><br />
             </div>
         </div>
     </form>
@@ -102,22 +102,40 @@
     <form id="Formulaire_etape" name="Formulaire_etape" action="../AffichagePHP/choix_action_tdf_coureur.php" method="post" enctype="application/x-www-form-urlencoded">
         <div class="row">
             <div class="col s2">
-                <label for="n_etape"> Numéro de l'étape : </label><input value="<?php verifierText("n_etape"); ?>" type="text" id="n_etape" name="n_etape" placeholder="Etape yes Yes yes"><br />
+                <label for="pays2"> Pays : </label>
+                <select class="browser-default" name="pays2" id="pays2">
+				<?php 
+				$donnees=$nation->nationalite();
+				$nation->remplirNation($donnees, "pays2");?>
+			</select> </div>
+			<div class="col s2">
+                <label for="annee_etape"> Année : </label><input value="<?php verifierText("annee_etape"); ?>" type="number" id="annee_etape" name="annee_etape" placeholder="2002"><br />
             </div>
             <div class="col s2">
-                <label for="nom_etape"> Ville de départ ou d'arrivée de l'étape : </label><input value="<?php verifierText("nom_etape"); ?>" type="text" id="nom_etape" name="nom_etape" placeholder="Etape yes Yes yes"><br />
+                <label for="dist_etape"> Distance : </label><input value="<?php verifierText("dist_etape"); ?>" type="number" id="dist_etape" name="dist_etape" placeholder="137"><br />
             </div>
             <div class="col s2">
-                <label for="paysEta"> Pays (select ?): </label><input value="<?php verifierText("paysEt"); ?>" type="text" id="paysEt" name="paysEt" placeholder="Etape yes Yes yes"><br />
+                <label for="catET"> Catégorie de l'étape : </label><input value="<?php verifierText("catET"); ?>" type="text" id="catET" name="catET" placeholder="ETA"><br />
             </div>
             <div class="col s2">
-                <label for="annee_disp_eq"> Année : </label><input value="<?php verifierText("annee_disp_eq"); ?>" type="number" id="annee_disp_eq" name="annee_disp_eq" placeholder="Etape yes Yes yes"><br />
+                <label for="n_etape"> Numéro de l'étape : </label><input value="<?php verifierText("n_etape"); ?>" type="text" id="n_etape" name="n_etape" placeholder="5"><br />
             </div>
             <div class="col s2">
-                <label for="annee_disp_eq"> Distance : </label><input value="<?php verifierText("annee_disp_eq"); ?>" type="number" id="annee_disp_eq" name="annee_disp_eq" placeholder="Etape yes Yes yes"><br />
+                <label for="nom_etape"> Ville de départ ou d'arrivée de l'étape : </label><input value="<?php verifierText("nom_etape"); ?>" type="text" id="nom_etape" name="nom_etape" placeholder="Dublin"><br />
             </div>
-            <div class="col s2">
-                <label for="paysEt"> Catégorie de l'étape (select) : </label><input value="<?php verifierText("paysEt"); ?>" type="number" id="paysEt" name="paysEt" placeholder="Etape yes Yes yes"><br />
+        </div>
+	</form>
+	<!-- formulaire sponsor -->
+    <form id="Formulaire_sponsor" name="Formulaire_sponsor" action="../AffichagePHP/choix_action_tdf_coureur.php" method="post" enctype="application/x-www-form-urlencoded">
+        <div class="row">
+            <div class="col s4">
+                <label for="n_sponsor"> Numéro du sponsor : </label><input value="<?php verifierText("n_sponsor"); ?>" type="number" id="n_sponsor" name="n_sponsor" placeholder="13"><br />
+            </div>
+            <div class="col s4">
+                <label for="n_equipe2"> Numéro de l'équipe : </label><input value="<?php verifierText("n_equipe2"); ?>" type="number" id="n_equipe2" name="n_equipe2" placeholder="126"><br />
+			</div>
+			<div class="col s4">
+                <label for="annee_sponsor"> Année : </label><input value="<?php verifierText("annee_sponsor"); ?>" type="number" id="annee_sponsor" name="annee_sponsor" placeholder="2001"><br />
             </div>
         </div>
     </form>
@@ -128,11 +146,6 @@
     <script src="../Affichage/choix_action_tdf_coureur.js"></script>
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $('select').material_select();
-    });
-</script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         var dropdowns = document.querySelectorAll('.dropdown-trigger');

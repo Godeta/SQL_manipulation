@@ -67,7 +67,7 @@ function AfficherRequete($tab, $code)
   {
     echo "<th>$key</th>\n";
   }
-  if(!empty($code) || $code!= false) {echo "<th> Modifier </th> <th> Supprimer </th>"; }
+  if((!empty($code) || $code!= false) && $code!="et") {echo "<th> Modifier </th> <th> Supprimer </th>"; }
   echo "</tr>\n";
   echo "</thead>\n";
   echo "<tbody>\n";
@@ -78,6 +78,7 @@ function AfficherRequete($tab, $code)
       //on récupère le numéro du coureur
       if($code=="c") {$numCour = $ligne["N_COUREUR"]; }
       else if($code=="e") {$numE = $ligne["N_EQUIPE"]; }
+      else if ($code=="s") {$numS = $ligne["N_SPONSOR"];}
       echo "<td>" . $valeur . "</td>\n";
     }
     if($code =="c" ) {
@@ -88,8 +89,14 @@ function AfficherRequete($tab, $code)
     }
     else if ($code =="e") {
       echo "<td> <a href='../AffichagePHP/inserer_tdf_equipe.php?id=$numE'>";
-      echo "<img src='../img/modify.png' alt='Une image symbolisant la modification' width='40' height ='40' > </a></td>";
+      echo "<button>Ajouter </button> </a></td>";
       echo "<td> <a href='../AffichagePHP/choix_action_tdf_coureur.php?id=$numE&table=equipe'>";
+      echo "<img src='../img/remove.png' alt='Une croix rouge indiquant la suppression' width='40' height ='40' > </a></td>";
+    }
+    else if ($code =="s") {
+      echo "<td> <a href='../AffichagePHP/inserer_tdf_sponsor.php?id=$numS'>";
+      echo "<button>Ajouter </button> </a></td>";
+      echo "<td> <a href='../AffichagePHP/choix_action_tdf_coureur.php?id=$numS&table=sponsor'>";
       echo "<img src='../img/remove.png' alt='Une croix rouge indiquant la suppression' width='40' height ='40' > </a></td>";
     }
     echo "</tr>\n";

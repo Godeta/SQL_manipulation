@@ -45,7 +45,7 @@ class Nation
         if($this->verifAnnees($debut, $fin)) {
         ajouterParamOCI($cur, ":rdebut", $debut,8);
         ajouterParamOCI($cur, ":rfin", $fin, 8);
-        // echo ("Valeurs : $code, $id, $debut, $fin");
+        echo ("Valeurs : $code, $id, $debut, $fin");
         }
         else {
             echo "Erreur de verification des années";
